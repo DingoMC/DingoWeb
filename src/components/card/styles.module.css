@@ -1,0 +1,97 @@
+.card {
+    padding: 0.25rem 0.5rem;
+    border: 2px solid #898989;
+    border-radius: 0.5rem;
+    display: grid;
+    grid-template-rows: [r1] min-content [r2] auto [end];
+    background-color: rgba(100, 100, 100, 0.45);
+    transition: all 0.5s;
+}
+.card:hover {
+    border-color: #df9923;
+    background-color: rgba(255, 170, 50, 0.5);
+    box-shadow: 0 0 1.2rem 0 rgba(255, 170, 50, 0.5);
+    transition: all 0.5s;
+}
+.card_title {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    border-bottom: 1px solid #5fdfdf;
+    padding-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
+}
+.card_title > .text {
+    text-align: left;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffeedd;
+}
+.card_title > .release, .card_title > .beta {
+    width: fit-content;
+    text-align: center;
+    justify-self: right;
+    align-self: center;
+    font-size: 0.9rem;
+    padding: 0.1rem 0.25rem;
+    border-radius: 0.5rem;
+}
+.card_title > .release {
+    border: 2px solid #23dd23;
+    background-color: rgba(0, 100, 0, 0.6);
+    color: #88ff88;
+}
+.card_title > .beta {
+    border: 2px solid #dd7823;
+    background-color: rgba(140, 90, 0, 0.6);
+    color: #ffdd88;
+}
+.card_content {
+    display: grid;
+    grid-template-rows: [r1] auto [r2] min-content [r3] min-content [end];
+    font-size: 1rem;
+    color: #ffffff;
+    font-weight: bold;
+}
+.card_go {
+    display: block;
+    width: fit-content;
+    justify-self: right;
+    border-radius: 0.25rem;
+    padding: 0.3rem 0.5rem;
+    text-decoration: none;
+    font-size: 1.1rem;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #1266ba;
+    border: 1px solid #2388dc;
+    transition: all 0.5s;
+}
+.card_go:hover {
+    background-color: #3489db;
+    border: 1px solid #45bcff;
+    transition: all 0.5s;
+}
+.card hr {
+    width: 100%;
+    height: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-top: 1px solid #3fcfcf;
+}
+@media screen and (max-width: 800px) {
+    .card_title {
+        font-size: 1.33rem;
+        padding-bottom: 0.2rem;
+        margin-bottom: 0.15rem;
+    }
+    .card_go {font-size: 1.05rem;}
+}
+@media screen and (max-width: 480px) {
+    .card_title {
+        font-size: 1.25rem;
+        padding-bottom: 0.2rem;
+        margin-bottom: 0.15rem;
+    }
+    .card_go {font-size: 1rem;}
+}

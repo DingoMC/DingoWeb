@@ -1,0 +1,53 @@
+.score_wrapper {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    column-gap: 1rem;
+}
+.score_box {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #555555;
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+}
+.score_on_fuse {
+    color: #55ff55 !important;
+    font-size: 0.9rem !important;
+    vertical-align: top;
+}
+.highscore_content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+}
+.highscore_content img {
+    justify-self: center;
+    max-width: 1rem;
+    max-height: 1rem;
+}
+
+.score_box.dark {
+    background-color: #3f3f3f;
+}
+
+@media screen and (max-width: 720px) {
+    .score_wrapper {
+        margin-top: 0.4rem;
+    }
+    .score_box {
+        font-size: 1rem;
+        padding: 0.1rem 0.3rem;
+    }
+    .score_on_fuse {
+        font-size: 0.8rem !important;
+    }
+    .highscore_content img {
+        max-width: 0.9rem;
+        max-height: 0.9rem;
+    }
+}

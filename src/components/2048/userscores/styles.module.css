@@ -1,0 +1,67 @@
+.main_container.dark {
+    background: rgb(25, 20, 30);
+    height: 100vh;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: transparent;
+	margin-top: 0.5rem;
+	row-gap: 0.5rem;
+}
+
+.title {
+	font-size: 1.5rem;
+	font-weight: bold;
+	color: #23bada;
+}
+
+.scoreboard {
+	border-collapse: collapse;
+	border: 2px solid #237878;
+}
+
+.scoreboard thead > tr {
+	background-color: #efefef;
+}
+
+.scoreboard thead {
+	font-size: 1rem;
+	font-weight: bold;
+	color: #001444;
+}
+
+.scoreboard th {
+	border: 1px solid #005555;
+	padding: 0.3rem 0.6rem;
+}
+
+.scoreboard td {
+	padding: 0.5rem 0.8rem;
+	text-align: center;
+}
+
+.scoreboard tbody > tr:nth-child(2n) {
+	color: #008989;
+	font-weight: bold;
+	background-color: #d0ffff;
+}
+
+.scoreboard tbody > tr:nth-child(2n + 1) {
+	color: #008900;
+	font-weight: bold;
+	background-color: #d0ffd0;
+}
+
+.scoreboard.dark thead > tr { background-color: rgba(0, 0, 255, 0.3); }
+.scoreboard.dark thead { color: #23cbdf; }
+.scoreboard.dark tbody > tr:nth-child(2n) {
+	background-color: rgba(0, 255, 255, 0.1);
+	color: #aadfdf;
+}
+.scoreboard.dark tbody > tr:nth-child(2n + 1) {
+	background-color: rgba(0, 255, 0, 0.1);
+	color: #aadfaa;
+}

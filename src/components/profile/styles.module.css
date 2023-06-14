@@ -1,0 +1,230 @@
+.main_container.dark {
+    background: rgb(25, 20, 30);
+    height: 100vh;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+    background: transparent;
+	margin: 0.5rem 1rem;
+    row-gap: 0.5rem;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #351294;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #351294;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #125455;
+}
+
+.section {
+    border: 1px solid #003434;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+}
+
+.uinput {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 0.5rem;
+}
+
+.changed {
+    border: 1px solid #008500;
+    color: #004500;
+    background-color: rgba(240, 255, 240, 1);
+    border-radius: 0.15rem;
+}
+
+.invalid {
+    border: 1px solid #850000;
+    color: #450000;
+    background-color: rgba(255, 240, 240, 1);
+    border-radius: 0.15rem;
+}
+
+.section span {
+    color: #002323;
+    font-size: 1.1rem;
+}
+
+.agrid {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.danger.title {
+    color: #a91212;
+}
+
+.danger.section {
+    border: 1px solid #780000;
+}
+
+button.danger {
+    background-color: transparent;
+    border: 1px solid #ff2323;
+    border-radius: 0.3rem;
+    font-size: 1.1rem;
+    color: #ff2323;
+    padding: 0.25rem 0.5rem;
+    transition: all 0.5s;
+    width: fit-content;
+}
+
+button.danger:hover {
+    background-color: #ff2323;
+    color: #ffefef;
+    transition: all 0.5s;
+}
+
+.right {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.apply {
+    background: #23aa23;
+    font-size: 1.1rem;
+    color: #ffffff;
+    padding: 0.4rem 0.6rem;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.apply:hover {
+    background: #55cc55;
+    color: #efffef;
+    transition: all 0.5s;
+}
+
+.section.dark { border: 1px solid #007878; }
+.section.danger.dark { border: 1px solid #980000; }
+.title.dark { color: #12b4b5; }
+.title.danger.dark { color: #d92323; }
+.section.dark span { color: #12b4b5; }
+.uinput input.dark {
+    background: none;
+    color: #ffffff;
+    border: 1px solid #898989;
+    border-radius: 0.15rem;
+}
+.uinput input.dark.changed {
+    border: 1px solid #00ba00;
+    color: #dfffdf;
+    background-color: rgba(0, 255, 0, 0.1);
+}
+.uinput input.dark.invalid {
+    border: 1px solid #ba0000;
+    color: #ffdfdf;
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+@media screen and (max-width: 720px) {
+    .main {
+        margin: 0.5rem 0.4rem;
+        row-gap: 0.4rem;
+    }
+    .switch {
+        width: 50px;
+        height: 28px;
+    }
+    .slider:before {
+        height: 22px;
+        width: 22px;
+        left: 4px;
+        bottom: 3px;
+    }
+    input:checked + .slider:before {
+        -webkit-transform: translateX(22px);
+        -ms-transform: translateX(22px);
+        transform: translateX(22px);
+    }
+    .slider.round {
+        border-radius: 22px;
+    }
+    .title {
+        font-size: 1.25rem;
+    }
+    .section {
+        border-radius: 0.45rem;
+        padding: 0.4rem;
+        row-gap: 0.4rem;
+    }
+    .uinput {
+        row-gap: 0.2rem;
+    }
+    .section span {
+        font-size: 1rem;
+    }
+}

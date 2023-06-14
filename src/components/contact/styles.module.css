@@ -1,0 +1,73 @@
+.main {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url('../../../public/backgd-main.webp');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+.container {
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+}
+.title {
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #fcd922;
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid #765623;
+}
+.contact_grid {
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    column-gap: 0.5rem;
+}
+.icon {
+    max-height: 28px;
+}
+.key {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ffaa22;
+}
+.value {
+    font-size: 1.3rem;
+    color: #eeaa21;
+}
+@media screen and (max-width: 800px) {
+    .container {
+        padding: 0.7rem 1.33rem;
+        display: flex;
+        flex-direction: column;
+    }
+    .title {
+        font-size: 1.6rem;
+        margin-bottom: 0.9rem;
+        padding-bottom: 0.5rem;
+    }
+    .contact_grid {grid-template-columns: [start] 28px [c] max-content [end];}
+    .icon {max-height: 23px;}
+    .key {font-size: 1.2rem;}
+    .value {font-size: 1.2rem; grid-column: span 2;}
+}
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 0.5rem 1rem;
+        display: flex;
+        flex-direction: column;
+    }
+    .title {
+        font-size: 1.5rem;
+        margin-bottom: 0.6rem;
+        padding-bottom: 0.4rem;
+    }
+    .contact_grid {grid-template-columns: [start] 24px [c] max-content [end];}
+    .icon {max-height: 18px;}
+    .key {font-size: 1rem;}
+    .value {font-size: 1rem; grid-column: span 2;}
+}

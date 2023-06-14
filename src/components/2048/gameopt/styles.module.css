@@ -1,0 +1,61 @@
+.rst_wrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 0.25rem;
+    column-gap: 0.5rem;
+}
+.rst {
+    background-color: #776767;
+    border: 2px solid #ff7878;
+    border-radius: 0.4rem;
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+.rst:hover {
+    background-color: #aa9a9a;
+}
+.undo {
+    background-color: #676777;
+    border: 2px solid #7878ff;
+    border-radius: 0.4rem;
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+.undo:hover { background-color: #9a9aaa; }
+.undo:disabled {
+    background-color: #474757;
+    color: #878787;
+    border: 2px solid #4848af;
+}
+
+.rst.dark { 
+    border: 2px solid #650000;
+    background-color: #454545;
+}
+.rst.dark:hover { background-color: #343434; }
+.undo.dark {
+    background-color: #454545;
+    border: 2px solid #000065;
+}
+.undo.dark:hover { background-color: #343434; }
+.undo.dark:disabled {
+    background-color: #232323;
+    color: #545454;
+    border: 2px solid #232354;
+}
+
+@media screen and (max-width: 720px) {
+    .rst, .undo {
+        margin: 0.35rem 0;
+        padding: 0.1rem 0.25rem;
+        font-size: 1.2rem;
+    }
+}
+@media screen and (max-width: 480px) {
+    .rst, .undo {
+        margin: 0.25rem 0;
+        padding: 0.05rem 0.25rem;
+        font-size: 1rem;
+    }
+}

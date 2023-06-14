@@ -1,0 +1,62 @@
+.main_container {
+    overflow: hidden;
+    overscroll-behavior: contain;
+}
+
+.main_container.dark {
+    background: rgb(25, 20, 30);
+    height: 100vh;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    background: transparent;
+}
+
+.wrapper {
+	overflow: hidden;
+    position: relative;
+    transform-origin: top;
+}
+
+.lost {
+	display: flex;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.7rem;
+    color: #ffeeee;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.setting_box {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 0.5rem;
+}
+
+@media screen and (max-width: 384px) {
+	.setting_box {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+    }
+	.lost {font-size: 1.35rem;}
+}
+
+@media screen and (max-width: 292px) {
+	.setting_box {
+        display: flex;
+        flex-direction: column;
+    }
+	.lost_shown {font-size: 1.13rem;}
+}
