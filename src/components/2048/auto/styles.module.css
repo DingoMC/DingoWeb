@@ -1,0 +1,74 @@
+.main {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    column-gap: 0.2rem;
+    row-gap: 0.2rem;
+    margin-bottom: 0.5rem;
+    background-color: rgba(255, 0, 255, 0.15);
+    padding: 0.4rem 0.6rem;
+    border: 2px solid #aa00aa;
+    border-radius: 0.5rem;
+}
+.main span {
+    display: block;
+    width: fit-content;
+    color: white;
+    font-weight: bold;
+    justify-self: center;
+}
+.main select {
+    background-color: rgba(0, 0, 255, 0.15);
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #23ac23;
+    color: #23ac23;
+}
+.main option {
+    color: #002200;
+}
+.delay_grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 0.2rem;
+}
+.delay_grid input {
+    max-width: 42px;
+    border: 1px solid #dd9800;
+    border-radius: 0.4rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #55efef;
+    padding: 0.2rem 0.4rem;
+}
+.plus {
+    font-size: 1rem;
+    background-color: #444444;
+    padding: 0.1rem 0.2rem;
+    border: 1px solid #33ff33;
+    color: #aaffaa;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    user-select: none;
+}
+.plus:disabled {
+    background-color: #232323;
+    border: 1px solid #234323;
+    color: #556655;
+    cursor: not-allowed;
+}
+.minus {
+    font-size: 1rem;
+    background-color: #444444;
+    border: 1px solid #ff3333;
+    border-radius: 0.3rem;
+    color: #ffaaaa;
+    padding: 0.1rem 0.2rem;
+    cursor: pointer;
+    user-select: none;
+}
+.minus:disabled {
+    background-color: #232323;
+    border: 1px solid #432323;
+    color: #665555;
+    cursor: not-allowed;
+}

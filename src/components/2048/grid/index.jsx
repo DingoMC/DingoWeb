@@ -21,14 +21,10 @@ const Grid = ({gridSize, tileArray, settings}) => {
         let e_size_max = Math.min(w, h) / gridSize
         let e_size = (e_size_opt > e_size_max ? e_size_max : e_size_opt)
         let e_size_str = e_size.toFixed(0) + "px"
-        let font_size = Math.floor(0.5 * e_size)
         let cols = []
         for (let i = 0; i < gridSize; i++) {
-            let digits = valAt(tileArray, gridSize, x, i).toString().length
-            while (3.0 * font_size * digits / 4.0 > e_size) font_size--;
-            let font_size_str = font_size.toFixed(0) + "px"
-            cols.push(<div className={`${styles.col} ${settings.darkMode && styles.dark}`} style={{"width": e_size_str, "height": e_size_str, "fontSize": font_size_str}} key={i}>
-                <Tile value={valAt(tileArray, gridSize, x, i)}></Tile>
+            cols.push(<div className={`${styles.col} ${settings.darkMode && styles.dark}`} style={{"width": e_size_str, "height": e_size_str}} key={i}>
+                <Tile tileSize={e_size} value={valAt(tileArray, gridSize, x, i)}></Tile>
             </div>)
         }
         return cols

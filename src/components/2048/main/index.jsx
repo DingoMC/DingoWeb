@@ -2,7 +2,7 @@ import Grid from "../grid"
 import GridOpt from "../gridopt"
 import Scoreboard from "../scoreboard"
 import styles from "./styles.module.css"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { emptyTileGrid, generateStartingState, hasChanged, isGameOver, moveDown, moveLeft, moveRight, moveUp } from "../../../lib/tile_array"
 import GameOpt from "../gameopt"
 import axios from "axios"
@@ -12,6 +12,7 @@ import { setUserSettings } from "../../../actions"
 import NavBar2048 from "../navbar"
 import { isGuest } from "../../../lib/guest"
 import { getGameState, saveGameState } from "../../../lib/grid_state"
+import Auto2048 from "../auto"
 
 const Main2048 = () => {
 
@@ -97,6 +98,10 @@ const Main2048 = () => {
     const [highscore, setHighscore] = useState(0)
     const [highscoreDB, setHighscoreDB] = useState(0)
 
+    // Auto States
+    const [running, setRunning] = useState(false)
+    const [aiWasEnabled, setAIWasEnabled] = useState(false)
+
     useEffect(() => {
         const handleSettingsGet = async () => {
             try {
@@ -113,12 +118,9 @@ const Main2048 = () => {
     }, [])
 
     useEffect(() => {
-        if (score > 0) {
-            setScore(0)
-        }
-        if (scoreOnLastFuse > 0) {
-            setScoreOnLastFuse(0)
-        }
+        if (!running) setAIWasEnabled(false)
+        if (score > 0) setScore(0)
+        if (scoreOnLastFuse > 0) setScoreOnLastFuse(0)
         let state = getGameState(gridSize)
         if (state === null) setTileArray(generateStartingState(gridSize))
         else {
@@ -150,7 +152,7 @@ const Main2048 = () => {
     }, [tileArray])
 
     useEffect(() => {
-        if (score > highscore) {
+        if (score > highscore && !aiWasEnabled) {
             setHighscore(score)
             if (isGuest()) {
                 let key = 'hs' + gridSize.toString()
@@ -172,11 +174,16 @@ const Main2048 = () => {
             }
         }
         if (gameOver && highscore > highscoreDB) {
-            if (isGuest()) {
-                let key = 'hs' + gridSize.toString()
-                localStorage.setItem(key, highscore)
+            if (!aiWasEnabled) {
+                if (isGuest()) {
+                    let key = 'hs' + gridSize.toString()
+                    localStorage.setItem(key, highscore)
+                }
+                else handleScoreUpdate().catch(console.error)
             }
-            else handleScoreUpdate().catch(console.error)
+            if (running) {
+                setAIWasEnabled(false)
+            }
         }
     }, [gameOver])
 
@@ -198,6 +205,17 @@ const Main2048 = () => {
                         settings={settings}/>
                     <GridOpt currGridSize={gridSize} settings={settings} gridSizeChange={setGridSize} />
                 </div>
+                <Auto2048 
+                    score={score}
+                    setScore={setScore}
+                    setScoreOnLastFuse={setScoreOnLastFuse}
+                    setTileArray={setTileArray}
+                    setAIWasEnabled={setAIWasEnabled}
+                    tileArray={tileArray}
+                    gridSize={gridSize}
+                    running={running}
+                    setRunning={setRunning}
+                    gameOver={gameOver} />
                 <div className={styles.wrapper}>
                     <Grid gridSize={gridSize} settings={settings} tileArray={tileArray}/>
                     {gameOver && <div className={styles.lost}>Game Over</div>}
