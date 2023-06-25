@@ -1,3 +1,5 @@
+import { Tree } from "./tree";
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -395,24 +397,24 @@ function isRowFull (tileArray, gridSize, row) {
  * @param {number} y 
  * @returns {number} Field Value
  */
-function AI1_FieldValue (gridSize, x, y) {
+function AI_FieldValue (tileArray, gridSize, x, y) {
     let dist = Math.sqrt(Math.pow(x, 2.0) + Math.pow(y, 2.0))
     let b = gridSize * gridSize
     let a = (1.0 - b) / ((gridSize - 1.0) * Math.SQRT2)
-    return a * dist + b
+    let v = 0
+    if (tileArray[idx(gridSize, x, y)] === undefined || tileArray[idx(gridSize, x, y)].val < 2) v = 0.0
+    else v = Math.log2(tileArray[idx(gridSize, x, y)].val)
+    return ((a * dist + 2 * b - v) / (2 * b))
 }
 
-/**
- * Get Tile Logarithmic Value (AI1)
- * @param {{x: number, y: number, val: number}[]} tileArray 
- * @param {number} gridSize 
- * @param {number} x 
- * @param {number} y 
- * @returns {number} Tile Logarithmic Value
- */
-function AI1_valAt (tileArray, gridSize, x, y) {
-    if (tileArray[idx(gridSize, x, y)] === undefined || tileArray[idx(gridSize, x, y)].val < 2) return 0
-    return tileArray[idx(gridSize, x, y)].val
+function AI_TileCountValue (tileArray, gridSize) {
+    let cnt = 0
+    for (let i = 0; i < tileArray.length; i++) {
+        if (tileArray[i].val > 0) cnt++
+    }
+    let b = 1.0
+    let a = (-b) / (gridSize * gridSize)
+    return a * cnt + b
 }
 
 function steps (val1, val2) {
@@ -429,10 +431,10 @@ function steps (val1, val2) {
  * @param {number} y 
  * @returns 
  */
-function AI1_NeighborValue (tileArray, gridSize, x, y) {
+function AI_NeighborValue (tileArray, gridSize, x, y) {
     if (tileArray[idx(gridSize, x, y)].val === 0) return 1.0
     let m = 1.0
-    let stepInterest = [[2.0, 1.8, 1.6],
+    let stepInterest = [[2.0, 1.8, 1.4],
                         [0.01, 0.0, -0.01],
                         [-0.01, -0.02, -0.01]]
     for (let i = x - 1; i <= x + 1; i++) {
@@ -445,15 +447,35 @@ function AI1_NeighborValue (tileArray, gridSize, x, y) {
             }
         }
     }
-    return m
+    let worst = 0.0, best = 0.0
+    for (let i = 0; i < stepInterest.length; i++) {
+        for (let j = 0; j < stepInterest[i].length; j++) {
+            if (stepInterest[i][j] > 0) {
+                worst += stepInterest[i][j] * (-gridSize) * gridSize
+                best += stepInterest[i][j] * gridSize * gridSize
+            }
+            if (stepInterest[i][j] < 0) {
+                worst += stepInterest[i][j] * gridSize * gridSize
+                best += stepInterest[i][j] * (-gridSize) * gridSize
+            }
+        }
+    }
+    return (m - worst) / (best - worst)
 }
 
-/**
- * 
- * @param {{x: number, y: number, val: number}[]} tileArray 
- * @param {number} gridSize 
- */
-function AI1_OptimalStateValue (tileArray, gridSize) {
+function AI_TotalTileValue (tileArray, gridSize, x, y) {
+    let weights = [0.5, 0.3, 1.0]
+    let values = [AI_FieldValue(tileArray, gridSize, x, y),
+                AI_TileCountValue(tileArray, gridSize),
+                AI_NeighborValue(tileArray, gridSize, x, y)]
+    let total = 0.0
+    for (let i = 0; i < values.length; i++) {
+        total += values[i] * weights[i]
+    }
+    return total
+}
+
+function AI_OptimalStateValue (tileArray, gridSize) {
     let v = []
     let ov = 0
     for (let i = 0; i < tileArray.length; i++) {
@@ -462,40 +484,96 @@ function AI1_OptimalStateValue (tileArray, gridSize) {
     v.sort((a, b) => {return b - a})
     for (let i = 0; i < v.length; i++) {
         let c = coords(gridSize, i)
-        ov += v[i] * AI1_FieldValue(gridSize, c.x, c.y) * AI1_NeighborValue(tileArray, gridSize, c.x, c.y)
+        ov += AI_TotalTileValue(tileArray, gridSize, c.x, c.y)
     }
     return ov
 }
 
-function AI1_StateValue (tileArray, gridSize) {
+function AI_StateValue (tileArray, gridSize) {
     let value = 0;
     for (let i = 0; i < gridSize; i++) {
         for (let j = 0; j < gridSize; j++) {
-            value += (AI1_valAt(tileArray, gridSize, i, j) * AI1_FieldValue(gridSize, i, j)) * AI1_NeighborValue(tileArray, gridSize, i, j)
+            value += AI_TotalTileValue(tileArray, gridSize, i, j)
         }
     }
-    return value - AI1_OptimalStateValue(tileArray, gridSize);
+    return value - AI_OptimalStateValue(tileArray, gridSize);
 }
 
-export function autoAI1MovePicker (tileArray, gridSize) {
-    let futureStates = []
-    for (let i = 0; i < 4; i++) {
-        let dirs = moveIdToDirs(i)
-        if (isMovePossible(tileArray, gridSize, dirs.dirX, dirs.dirY)) {
-            let e = {}
-            switch (i) {
-                case 0: { e = moveUp(tileArray, gridSize); break; }
-                case 1: { e = moveRight(tileArray, gridSize); break; }
-                case 2: { e = moveDown(tileArray, gridSize); break; }
-                case 3: { e = moveLeft(tileArray, gridSize); break; }
-                default: break;
-            }
-            futureStates.push({a: e.tileArray, m: i, v: AI1_StateValue(e.tileArray, gridSize)})
-        }
+/**
+ * 
+ * @param {string} key 
+ * @returns {string}
+ */
+function nextKey (key) {
+    if (key === 'x') return 'x0'
+    if (key.charCodeAt(key.length - 1) < 51) return key.slice(0, key.length - 1) + String.fromCharCode(key.charCodeAt(key.length - 1) + 1);
+    let vArray = []
+    let nextGen = ''
+    for (let i = 1; i < key.length; i++) {
+        vArray.push(parseInt(key[i]))
     }
-    if (futureStates.length === 0) return -1
-    futureStates.sort((a, b) => {
-        return b.v - a.v
+    for (let i = vArray.length - 1; i >= 0; i--) {
+        vArray[i]++
+        if (vArray[i] > 3) {
+            vArray[i] = 0
+            if (i == 0) nextGen = '0'
+        }
+        else break;
+    }
+    let nk = 'x'
+    for (let i = 0; i < vArray.length; i++) {
+        nk += vArray[i].toString()
+    }
+    return nk + nextGen
+}
+
+/**
+ * 
+ * @param {number} moves 
+ * @param {{x: number, y: number, val: number}[]} tileArray 
+ * @param {number} gridSize 
+ */
+export function autoAIMovePicker (moves, tileArray, gridSize) {
+    let futureStates = new Tree('x', {currGrid: initStateFrom(tileArray, gridSize), value: 0})
+    let parentCursor = 'x'
+    let cursor = 'x0'
+    let depth = 0, cnt = 0, maxcnt = 0
+    for (let i = 0; i < moves; i++) maxcnt += Math.pow(4, i);
+    while (depth <= moves && cnt < maxcnt) {
+        let curr = futureStates.find(parentCursor).value.currGrid
+        let currScore = futureStates.find(parentCursor).value.value
+        for (let d = 0; d < 4; d++) {
+            let dirs = moveIdToDirs(d)
+            cursor = parentCursor + d.toString()
+            if (isMovePossible(futureStates.find(parentCursor).value.currGrid, gridSize, dirs.dirX, dirs.dirY)) {
+                let e = {}
+                switch (d) {
+                    case 0: { e = moveUp(curr, gridSize); break; }
+                    case 1: { e = moveRight(curr, gridSize); break; }
+                    case 2: { e = moveDown(curr, gridSize); break; }
+                    case 3: { e = moveLeft(curr, gridSize); break; }
+                    default: break;
+                }
+                futureStates.insert(parentCursor, cursor, {currGrid: initStateFrom(e.tileArray, gridSize), value: currScore + AI_StateValue(e.tileArray, gridSize)})
+            }
+            cnt++
+        }
+        let err_cnt = 0
+        do {
+            parentCursor = nextKey(parentCursor);
+            err_cnt++
+        } while (futureStates.find(parentCursor) === undefined && err_cnt < maxcnt);
+        depth = parentCursor.length
+    }
+    let maxv = -Infinity;
+    let maxkey = 'x';
+    [...futureStates.preOrderTraversal()].map((x) => {
+        if (x.value.value > maxv && x.key !== 'x') {
+            maxkey = x.key
+            maxv = x.value.value
+        }
+        return x
     })
-    return futureStates[0].m
+    if (maxkey === 'x') return -1
+    return parseInt(maxkey[1])
 }

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react"
-import { moveLeft, autoRandomMovePicker, moveUp, moveDown, moveRight, autoCycleMoverPicker, autoLURUMoverPicker, autoAI1MovePicker } from "../../../lib/tile_array"
+import { moveLeft, autoRandomMovePicker, moveUp, moveDown, moveRight, autoCycleMoverPicker, autoLURUMoverPicker, autoAI1MovePicker, autoAI2MovePicker, autoAIMovePicker } from "../../../lib/tile_array"
 import styles from "./styles.module.css"
 
 const Auto2048 = ({score, setScore, setScoreOnLastFuse, setTileArray, setAIWasEnabled, tileArray, gridSize, running, setRunning, gameOver}) => {
 
-    const modes = ['Random', 'Cycle', 'LURU', 'AI-1']
+    const modes = ['Random', 'Cycle', 'LURU', 'AI-1', 'AI-2', 'AI-3']
     const [mode, setMode] = useState(modes[0])
     const [sequencer, setSequencer] = useState([])
     const [seq, setSeq] = useState(0)
@@ -65,7 +65,15 @@ const Auto2048 = ({score, setScore, setScoreOnLastFuse, setTileArray, setAIWasEn
                     setSeq(cdata.seq)
                 }
                 case (modes[3]): {
-                    moveNo = autoAI1MovePicker(tileArray, gridSize)
+                    moveNo = autoAIMovePicker(2, tileArray, gridSize)
+                    break
+                }
+                case (modes[4]): {
+                    moveNo = autoAIMovePicker(3, tileArray, gridSize)
+                    break
+                }
+                case (modes[5]): {
+                    moveNo = autoAIMovePicker(5, tileArray, gridSize)
                     break
                 }
             }

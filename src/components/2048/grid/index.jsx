@@ -17,7 +17,7 @@ const Grid = ({gridSize, tileArray, settings}) => {
         let e_size_opt = a * Math.exp(-gridSize) + b
         let total_paddings = (32.0 / gridSize) * (gridSize + 1.0)
         let w = windowSize.current[0] - freeSpacing - total_paddings
-        let h = windowSize.current[1] - freeSpacing - total_paddings - 171
+        let h = windowSize.current[1] - freeSpacing - total_paddings - 245
         let e_size_max = Math.min(w, h) / gridSize
         let e_size = (e_size_opt > e_size_max ? e_size_max : e_size_opt)
         let e_size_str = e_size.toFixed(0) + "px"
