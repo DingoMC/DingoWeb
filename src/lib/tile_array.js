@@ -99,6 +99,21 @@ export function valAt (tileArray, gridSize, x, y) {
     return (tileArray[idx(gridSize, x, y)] === undefined ? 0 : tileArray[idx(gridSize, x, y)].val)
 }
 
+function randomTileValue (gridSize) {
+    let probTable = [[100], [100],
+        [93, 7], [91, 9], [90, 10],
+        [85, 14, 1], [80, 18, 2], [75, 20, 5],
+        [70, 27, 2, 1], [68, 26, 4, 2], [64, 22, 9, 5],
+        [64, 23, 10, 2, 1], [62, 22, 10, 4, 2], [58, 19, 10, 8, 5],
+        [58, 21, 16, 2, 2, 1], [55, 19, 15, 5, 4, 2], [50, 15, 12, 10, 8, 5]]
+    let r = getRandomInt(1, 100)
+    let v = 2
+    for (let i = 1; i < probTable[gridSize].length; i++) {
+        if (r <= probTable[gridSize][i]) v *= 2
+        else break;
+    }
+    return v
+}
 
 /**
  * Generate starting state of a game
@@ -114,7 +129,7 @@ export function generateStartingState (gridSize) {
             x = getRandomInt(0, gridSize - 1)
             y = getRandomInt(0, gridSize - 1)
         } while (isOccupied(e, gridSize, x, y))
-        let val = (getRandomInt(1, 100) % 10 === 0 ? 4 : 2)
+        let val = randomTileValue(gridSize)
         e[(x * gridSize) + y].val = val
     }
     return e
@@ -188,7 +203,7 @@ function generateNewTile (tileArray, gridSize) {
         x = getRandomInt(0, gridSize - 1)
         y = getRandomInt(0, gridSize - 1)
     } while (isOccupied(e, gridSize, x, y))
-    let val = (getRandomInt(1, 100) % 10 === 0 ? 4 : 2)
+    let val = randomTileValue(gridSize)
     e[(x * gridSize) + y].val = val
     return e
 }
