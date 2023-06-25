@@ -464,7 +464,7 @@ function AI_NeighborValue (tileArray, gridSize, x, y) {
 }
 
 function AI_TotalTileValue (tileArray, gridSize, x, y) {
-    let weights = [0.5, 0.3, 1.0]
+    let weights = [1.0, 1.0, 0.9]
     let values = [AI_FieldValue(tileArray, gridSize, x, y),
                 AI_TileCountValue(tileArray, gridSize),
                 AI_NeighborValue(tileArray, gridSize, x, y)]
@@ -527,6 +527,13 @@ function nextKey (key) {
     return nk + nextGen
 }
 
+function checkTransposition (trtable, tileArray) {
+    for (let i = 0; i < trtable.length; i++) {
+        if (!hasChanged(trtable[i], tileArray)) return false;
+    }
+    return true;
+}
+
 /**
  * 
  * @param {number} moves 
@@ -538,6 +545,7 @@ export function autoAIMovePicker (moves, tileArray, gridSize) {
     let parentCursor = 'x'
     let cursor = 'x0'
     let depth = 0, cnt = 0, maxcnt = 0
+    let transposition = [initStateFrom(tileArray, gridSize)]
     for (let i = 0; i < moves; i++) maxcnt += Math.pow(4, i);
     while (depth <= moves && cnt < maxcnt) {
         let curr = futureStates.find(parentCursor).value.currGrid
@@ -554,7 +562,10 @@ export function autoAIMovePicker (moves, tileArray, gridSize) {
                     case 3: { e = moveLeft(curr, gridSize); break; }
                     default: break;
                 }
-                futureStates.insert(parentCursor, cursor, {currGrid: initStateFrom(e.tileArray, gridSize), value: currScore + AI_StateValue(e.tileArray, gridSize)})
+                if (checkTransposition(transposition, e.tileArray)) {
+                    futureStates.insert(parentCursor, cursor, {currGrid: e.tileArray, value: currScore + AI_StateValue(e.tileArray, gridSize)})
+                    transposition.push(e.tileArray)
+                }
             }
             cnt++
         }
