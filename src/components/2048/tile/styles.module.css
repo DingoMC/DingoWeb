@@ -23,28 +23,28 @@
 .tile_1024 {background-color: #e6b733;}
 .tile_2048 {background-color: #e9b423;}
 .tile_4096 {background-color: #ecb103;}
-.tile_8192 {background-color: #c6b303;}
-.tile_16384 {background-color: #a0b603;}
-.tile_32768 {background-color: #7ab904;}
-.tile_65536 {background-color: #54ba04;}
-.tile_131072 {background-color: #2ebd04;}
-.tile_262144 {background-color: #05c205;}
-.tile_524288 {background-color: #05c227;}
-.tile_1048576 {background-color: #05c246;}
-.tile_2097152 {background-color: #05c265;}
-.tile_4194304 {background-color: #05c284;}
-.tile_8388608 {background-color: #05c2a3;}
-.tile_16777216 {background-color: #05c2c2;}
-.tile_33554432 {background-color: #05a3c2;}
-.tile_67108864 {background-color: #0581c2;}
-.tile_134217728 {background-color: #0562c2;}
-.tile_268435456 {background-color: #0543c2;}
-.tile_536870912 {background-color: #0527c2;}
-.tile_1073741824 {background-color: #0505c2;}
-.tile_2147483648 {background-color: #2905c2;}
-.tile_4294967296 {background-color: #4605c2;}
-.tile_8589934592 {background-color: #6505c2;}
-.tile_17179869184 {background-color: #8405c2;}
-.tile_34359738368 {background-color: #a305c2;}
-.tile_68719476736 {background-color: #c205c2;}
+.tile_8192 {background-color: #00c000; box-shadow: 0 0 5px 2px rgba(0, 255, 0, 0.6);}
+.tile_16384 {background-color: #01c022; box-shadow: 0 0 5px 2px rgba(1, 255, 20, 0.6);}
+.tile_32768 {background-color: #02c040; box-shadow: 0 0 5px 2px rgba(2, 255, 40, 0.6);}
+.tile_65536 {background-color: #03c160; box-shadow: 0 0 5px 2px rgba(3, 255, 60, 0.6);}
+.tile_131072 {background-color: #04c180; box-shadow: 0 0 5px 2px rgba(4, 255, 80, 0.6);}
+.tile_262144 {background-color: #04c1a0; box-shadow: 0 0 5px 2px rgba(4, 255, 100, 0.6);}
+.tile_524288 {background-color: #0581c2; box-shadow: 0 0 5px 2px rgba(5, 255, 226, 0.6);}
+.tile_1048576 {background-color: #056dc2; box-shadow: 0 0 5px 2px rgba(5, 235, 226, 0.6);}
+.tile_2097152 {background-color: #0559c2; box-shadow: 0 0 5px 2px rgba(5, 215, 226, 0.6);}
+.tile_4194304 {background-color: #0545c2; box-shadow: 0 0 5px 2px rgba(5, 195, 226, 0.6);}
+.tile_8388608 {background-color: #0531c2; box-shadow: 0 0 5px 2px rgba(5, 175, 226, 0.6);}
+.tile_16777216 {background-color: #051dc2; box-shadow: 0 0 5px 2px rgba(5, 155, 226, 0.6);}
+.tile_33554432 {background-color: #4605c2; box-shadow: 0 0 5px 2px rgba(100, 5, 226, 0.6);}
+.tile_67108864 {background-color: #5a05c2; box-shadow: 0 0 5px 2px rgba(115, 5, 226, 0.6);}
+.tile_134217728 {background-color: #6e05c2; box-shadow: 0 0 5px 2px rgba(125, 5, 226, 0.6);}
+.tile_268435456 {background-color: #8205c2; box-shadow: 0 0 5px 2px rgba(140, 5, 226, 0.6);}
+.tile_536870912 {background-color: #9605c2; box-shadow: 0 0 5px 2px rgba(155, 5, 226, 0.6);}
+.tile_1073741824 {background-color: #aa05c2; box-shadow: 0 0 5px 2px rgba(170, 5, 226, 0.6);}
+.tile_2147483648 {background-color: #524205; box-shadow: 0 0 5px 2px rgba(170, 150, 5, 0.6);}
+.tile_4294967296 {background-color: #423604; box-shadow: 0 0 5px 2px rgba(187, 154, 5, 0.6);}
+.tile_8589934592 {background-color: #362d03; box-shadow: 0 0 5px 2px rgba(204, 158, 5, 0.6);}
+.tile_17179869184 {background-color: #2a2402; box-shadow: 0 0 5px 2px rgba(221, 162, 5, 0.6);}
+.tile_34359738368 {background-color: #1e1b01; box-shadow: 0 0 5px 2px rgba(238, 166, 5, 0.6);}
+.tile_68719476736 {background-color: #121200; box-shadow: 0 0 5px 2px rgba(255, 170, 5, 0.6);}
 .tile_0 {display: none !important;}
