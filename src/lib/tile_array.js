@@ -479,7 +479,7 @@ function AI_NeighborValue (tileArray, gridSize, x, y) {
 }
 
 function AI_TotalTileValue (tileArray, gridSize, x, y) {
-    let weights = [0.1, 1.0, 0.1]
+    let weights = [0.297, 1.0, 0.1]
     let values = [AI_FieldValue(tileArray, gridSize, x, y),
                 AI_TileCountValue(tileArray, gridSize),
                 AI_NeighborValue(tileArray, gridSize, x, y)]
