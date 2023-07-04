@@ -11,6 +11,7 @@ import UserScores2048 from "./components/2048/userscores"
 import Profile from "./components/profile"
 import Logout from "./components/logout"
 import Contact from "./components/contact"
+import MainMS from "./components/minesweeper/main"
 
 const store = configureStore({reducer: rootReducer})
 
@@ -35,6 +36,7 @@ function App() {
         <Route path="/" exact element={<Main />} />
         <Route path="/contact" exact element={<Contact />} />
         <Route path="/2048" exact element={<Main2048 />} />
+        <Route path="/minesweeper" exact element={<MainMS />} />
         <Route path="/2048/leaderboard" exact element={<Leaderboard2048 />} />
         <Route path="/2048/userscores" exact element={<UserScores2048 />} />
         {user && <Route path="/myprofile" exact element={<Profile />} />}
