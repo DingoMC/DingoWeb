@@ -1,5 +1,5 @@
 import { breakpointColor } from '../../../lib/colors'
-import { countFlags, flagField, generateStartingState, isBomb, isFlagged, isGameOver, isGameWin, isOpen, openField, valAt } from '../../../lib/minesweeper'
+import { AIMove, flagField, generateStartingState, isBomb, isFlagged, isGameOver, isGameWin, isOpen, openField, valAt } from '../../../lib/minesweeper'
 import NavBarMS from '../navbar'
 import styles from './styles.module.css'
 import { useEffect, useState, useRef } from 'react'
@@ -16,6 +16,7 @@ const MainMS = () => {
     const [hasStarted, setHasStarted] = useState(false)
     const [difficulty, setDifficulty] = useState(1)
     const [time, setTime] = useState(0)
+    const [AIEnabled, setAIEnabled] = useState(false)
 
     // Timer
     useEffect (() => {
@@ -45,6 +46,7 @@ const MainMS = () => {
         if (isGameOver(newState)) {
             setHasStarted(false)
             setGameOver(true)
+            setAIEnabled(false)
         }
         setMinefield(newState)
     }
@@ -64,6 +66,7 @@ const MainMS = () => {
             if (isGameWin(newState, bombs)) {
                 setHasStarted(false)
                 setGameWon(true)
+                setAIEnabled(false)
             }
         }
     }
@@ -78,7 +81,7 @@ const MainMS = () => {
     const generateCols = (row) => {
         let e = []
         let freeSpacing_w = windowSize.current[0] < 480 ? 60 : 120
-        let freeSpacing_h = windowSize.current[0] < 480 ? 220 : 180
+        let freeSpacing_h = windowSize.current[0] < 480 ? 220 : 200
         let paddings_w = (32.0 / gridSize.y) * (gridSize.y + 1.0)
         let paddings_h = (32.0 / gridSize.x) * (gridSize.x + 1.0)
         let tileSizeMax_w = (windowSize.current[0] - freeSpacing_w - paddings_w) / gridSize.y
@@ -136,6 +139,7 @@ const MainMS = () => {
         setFlags(bombs)
         setFlagMode(false)
         setTime(0)
+        setAIEnabled(false)
     }
 
     const minBombCount = (x, y) => {
@@ -237,6 +241,12 @@ const MainMS = () => {
                         <img title='Toggle flag mode' src={flagMode ? "ms_icons/flag-selected.png" : "ms_icons/flag.png"} alt="F" className={styles.selectable} onClick={() => {setFlagMode(!flagMode)}} />
                         <input type="text" disabled value={flags.toString()} />
                     </div>
+                    <button className={styles.ai} onClick={()=>{
+                        if (!AIEnabled) setAIEnabled(true)
+                        let e = AIMove(minefield, gridSize, bombs)
+                        if (e.flag) handleFlagging(e.x, e.y)
+                        else handleOpen(e.x, e.y)
+                    }}>AI</button>
                 </div>}
                 {!hasStarted && <div className={styles.options}>
                     <button className={styles.play} onClick={handlePlay}>Play</button>

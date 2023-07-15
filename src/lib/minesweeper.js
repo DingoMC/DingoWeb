@@ -213,3 +213,112 @@ export function countFlags (minefield) {
     }
     return cnt
 }
+
+function isOpenNumber (minefield, x, y) {
+    if (!isOpen(minefield, x, y) || isBomb(minefield, x, y) || isFlagged(minefield, x, y) || valAt(minefield, x, y) === '') return false
+    return true
+}
+
+function isClosed (minefield, x, y) {
+    return (!isOpen(minefield, x, y) && !isFlagged(minefield, x, y))
+}
+
+function countKnown (minefield) {
+    let cnt = 0
+    for (let i = 0; i < minefield.length; i++) {
+        for (let j = 0; j < minefield[i].length; j++) {
+            if (isOpen(minefield, i, j) || isFlagged(minefield, i, j)) cnt++
+        }
+    }
+    return cnt
+}
+
+/**
+ * Count default probability for unknown fields
+ * @param {[[{value: string, open: boolean, flagged: boolean}]]} minefield 
+ * @param {number} gridSize 
+ * @param {number} bombs 
+ */
+function defaultProb (minefield, gridSize, bombs) {
+    return 1.0 - ((bombs - countFlags(minefield) * 1.0) / (gridSize.x * gridSize.y - countKnown(minefield) * 1.0))
+}
+
+/**
+ * Check if field is unkown
+ * @param {[[{value: string, open: boolean, flagged: boolean}]]} minefield 
+ * @param {number} x 
+ * @param {number} y 
+ * @returns {boolean}
+ */
+function isUnknown (minefield, gridSize, x, y) {
+    for (let i = x - 1; i <= x + 1; i++) {
+        for (let j = y - 1; j <= y + 1; j++) {
+            if (checkCoords(gridSize, i, j) && isOpen(minefield, i, j)) return false
+        }
+    }
+    return true
+}
+
+/**
+ * 
+ * @param {[[{value: string, open: boolean, flagged: boolean}]]} minefield 
+ * @param {number} gridSize 
+ * @param {number} bombs 
+ */
+export function AIMove (minefield, gridSize, bombs) {
+    let probs = new Array(minefield.length)
+    let d = defaultProb(minefield, gridSize, bombs)
+    for (let i = 0; i < minefield.length; i++) {
+        probs[i] = new Array(minefield[i].length)
+        for (let j = 0; j < minefield[i].length; j++) {
+            probs[i][j] = isUnknown(minefield, gridSize, i, j) ? d : 0.0
+        }
+    }
+    for (let i = 0; i < minefield.length; i++) {
+        for (let j = 0; j < minefield[i].length; j++) {
+            if (isOpen(minefield, i, j) || isFlagged(minefield, i, j)) probs[i][j] = -255.0
+            if (isOpenNumber(minefield, i, j)) {
+                let num = parseInt(valAt(minefield, i, j))
+                let open = 0, total = 0, flagged = 0
+                let prob_to_add = 0.0
+                for (let k = i - 1; k <= i + 1; k++) {
+                    for (let l = j - 1; l <= j + 1; l++) {
+                        if (checkCoords(gridSize, k, l) && !(k === i && l === j)) {
+                            total++
+                            if (isOpen(minefield, k, l)) open++
+                            else if (isFlagged(minefield, k, l)) flagged++
+                        }
+                    }
+                }
+                if (total - open === num) prob_to_add = 255.0
+                else prob_to_add = 1.0 - ((num - flagged) / (total - flagged - open))
+                for (let k = i - 1; k <= i + 1; k++) {
+                    for (let l = j - 1; l <= j + 1; l++) {
+                        if (checkCoords(gridSize, k, l) && !(k === i && l === j) && isClosed(minefield, k, l)) {
+                            if (probs[k][l] < 255.0 && prob_to_add < 255.0) {
+                                if (probs[k][l] > 0.0 && probs[k][l] < 1.0 && prob_to_add < 1.0) probs[k][l] = (probs[k][l] + prob_to_add) / 2.0
+                                else if (probs[k][l] === 1.0 || prob_to_add === 1.0) probs[k][l] = 1.0
+                                else probs[k][l] = prob_to_add
+                            }
+                            else probs[k][l] = 255.0
+                        }
+                    }
+                }
+            }
+        }
+    }
+    console.log(probs)
+    let maxes = [], max = 0.0
+    for (let i = 0; i < probs.length; i++) {
+        for (let j = 0; j < probs[i].length; j++) {
+            if (probs[i][j] > max) {
+                maxes = []
+                max = probs[i][j]
+                maxes.push({x: i, y: j, flag: (max >= 255 ? true : false)})
+            }
+            else if (probs[i][j] === max) maxes.push({x: i, y: j, flag: (max >= 255 ? true : false)})
+        }
+    }
+    console.log(maxes)
+    return maxes[getRandomInt(0, maxes.length - 1)]
+}
