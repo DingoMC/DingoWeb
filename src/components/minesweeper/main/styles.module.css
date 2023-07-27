@@ -212,6 +212,28 @@
     transition: all 0.5s;
 }
 .ai:hover {background-color: rgba(0, 170, 255, 0.3);}
+.main_score {color: #23ffff;}
+.plus_score {color: #23ff23;}
+.minus_score {color: #ff4545;}
+
+/* Dark Mode */
+.main_container.dark { background: rgb(25, 20, 30); }
+.main_container.dark .grid {
+    background-color: #343434;
+    border: 0.2rem solid #343434;
+}
+.main_container.dark .tile { background-color: #787878; }
+.main_container.dark .tile:hover {background-color: #686868;}
+.main_container.dark .open {background-color: #666666;}
+.main_container.dark .bomb {background-color: #772323;}
+.main_container.dark .closed { border: 2px solid #606060; }
+.main_container.dark .flagged { background-color: #667777;}
+.main_container.dark .f-1 {color: #23cfff;}
+.main_container.dark .f-2 {color: #23cf23;}
+.main_container.dark .f-3 {color: #ff5555;}
+.main_container.dark .f-4 {color: #2323ff;}
+.main_container.dark .f-5 {color: #cb0000;}
+/* Responsive */
 @media screen and (max-width: 480px) {
     .menu_title {
         font-weight: bold;

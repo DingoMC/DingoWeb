@@ -3,8 +3,16 @@ import { AIMove, flagField, generateStartingState, isBomb, isFlagged, isGameOver
 import NavBarMS from '../navbar'
 import styles from './styles.module.css'
 import { useEffect, useState, useRef } from 'react'
+import { useSelector, useDispatch } from "react-redux"
+import { setUserSettings } from "../../../actions"
+import axios from "axios"
+import { cors_url } from "../../../lib/cors_url"
+import { isGuest } from '../../../lib/guest'
 
 const MainMS = () => {
+    const settings = useSelector((state) => state.user_settings)
+    const dispatch = useDispatch()
+
     const windowSize = useRef([window.innerWidth, window.innerHeight])
     const [gridSize, setGridSize] = useState({x: 9, y: 9})
     const [bombs, setBombs] = useState(10)
@@ -17,6 +25,12 @@ const MainMS = () => {
     const [difficulty, setDifficulty] = useState(1)
     const [time, setTime] = useState(0)
     const [AIEnabled, setAIEnabled] = useState(false)
+    const [scoreOnWin, setScoreOnWin] = useState(0)
+    const [scoreOnLose, setScoreOnLose] = useState(0)
+    // Player stats
+    const [score, setScore] = useState(0)
+    const [wins, setWins] = useState(0)
+    const [losses, setLosses] = useState(0)
 
     // Timer
     useEffect (() => {
@@ -31,6 +45,88 @@ const MainMS = () => {
         setMinefield(generateStartingState(gridSize, bombs))
         setDifficulty(calculateDifficulty())
     }, [gridSize, bombs])
+
+    useEffect(() => {
+        if (AIEnabled) {
+            setScoreOnWin(0)
+            setScoreOnLose(0)
+        }
+        else {
+            let wst = 1.0 + 50.0 / time
+            let lst = ((time - 19.1) / (time * time - 50.0 * time + 628.0)) + 1.0
+            let wsd = Math.sqrt(2.0 * difficulty) * Math.log(2.0 * difficulty) + 0.5
+            let lsd = Math.log(difficulty) + 1.0
+            setScoreOnWin(Math.round(wst * wsd))
+            setScoreOnLose(Math.round(lst * lsd))
+        }
+    }, [time, difficulty, AIEnabled])
+
+    useEffect(() => {
+        const handleScoreGet = async () => {
+            try {
+                const url = cors_url("api/minesweeper/getscore")
+                const token = localStorage.getItem("token")
+                const response = await axios.get(url, {params: {token: token}})
+                setScore(response.data.score)
+                setWins(response.data.wins)
+                setLosses(response.data.losses)
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+        const handleSettingsGet = async () => {
+            try {
+                const url = cors_url("api/usersettings/settings")
+                const token = localStorage.getItem("token")
+                const response = await axios.get(url, {params: {token: token}})
+                dispatch(setUserSettings(response.data.settings.dark_mode))
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+        if (!isGuest()) {
+            handleSettingsGet().catch(console.error)
+            handleScoreGet()
+        }
+        else {
+            if (localStorage.getItem('ms_stats') !== null) {
+                let e = JSON.parse(localStorage.getItem('ms_stats'))
+                setScore(e.score)
+                setWins(e.wins)
+                setLosses(e.losses)
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        const handleScoreUpdate = async () => {
+            try {
+                const url = cors_url('api/minesweeper/updatescore')
+                const token = localStorage.getItem("token")
+                await axios.post(url, {token: token, score: (gameWon ? score+scoreOnWin : score-scoreOnLose), wins: (gameWon ? wins+1 : wins), losses: (gameOver ? losses+1 : losses)})
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+        if (gameOver || gameWon) {
+            if (!isGuest()) handleScoreUpdate()
+            else {
+                let e = {score: (gameWon ? score+scoreOnWin : score-scoreOnLose), wins: (gameWon ? wins+1 : wins), losses: (gameOver ? losses+1 : losses)}
+                localStorage.setItem('ms_stats', JSON.stringify(e))
+            }
+        }
+        if (gameOver) {
+            setScore(score - scoreOnLose)
+            setLosses(losses + 1)
+        }
+        if (gameWon) {
+            setScore(score + scoreOnWin)
+            setWins(wins + 1)
+        }
+    }, [gameOver, gameWon])
 
     const calculateDifficulty = () => {
         /*let a = 1.0 * gridSize.x * gridSize.y
@@ -197,17 +293,6 @@ const MainMS = () => {
     }
 
     const displayTime = () => {
-        /*
-            255, 255, 255 --> 0
-            85, 255, 255 --> 60
-            85, 255, 85 --> 180
-            255, 255, 85 --> 420
-            255, 170, 0 --> 900
-            255, 50, 50 --> 1860
-            170, 35, 35 --> 3780
-            170, 35, 170 --> 7620
-            120, 120, 120 --> 86400
-        */
         let rgb = breakpointColor([{r:255,g:255,b:255,v:0},
             {r:85,g:255,b:255,v:60},
             {r:85,g:255,b:85,v:180},
@@ -221,24 +306,50 @@ const MainMS = () => {
         return <span style={{color: color}} className={styles.info_box}>{timeStr()}</span>
     }
 
+    const displayScore = () => {
+        let rgb = {}
+        if (time === 0) rgb = {r:170,g:170,b:170}
+        else {
+            rgb = breakpointColor([{r:170,g:35,b:170,v:1.0/4096.0},
+            {r:255,g:55,b:55,v:1.0/3.0},
+            {r:255,g:255,b:55,v:1.0},
+            {r:55,g:255,b:55,v:3.0},
+            {r:35,g:255,b:170,v:10.0},
+            {r:35,g:170,b:170,v:4096.0}], scoreOnWin / scoreOnLose)
+        }
+        let color = 'rgb(' + rgb.r.toFixed(0) + ',' + rgb.g.toFixed(0) + ',' + rgb.b.toFixed(0) + ')'
+        return <div style={{color: color}} className={styles.info_box}>
+            <span className={styles.main_score}>{score}</span>
+            <span>{' ('}</span>
+            <span className={styles.plus_score}>+{time === 0 ? '?' : scoreOnWin}</span>
+            <span>/</span>
+            <span className={styles.minus_score}>-{time === 0 ? '?' : scoreOnLose}</span>
+            <span>{')'}</span>
+        </div>
+    }
+
     return (
-        <div className={styles.main_container}>
-            <NavBarMS current="main" settings={{darkMode: false}}/>
+        <div className={`${styles.main_container} ${settings.darkMode ? styles.dark : ''}`}>
+            <NavBarMS current="main" settings={{darkMode: settings.darkMode}}/>
             <div className={styles.info}>
                 <div>
-                    <img src="svg/difficulty.svg" alt="D" />
+                    <img src={"svg/difficulty" + (settings.darkMode ? "-dark.svg" : ".svg")} alt="D" />
                     {displayDifficulty()}
                 </div>
                 <div>
-                    <img src="svg/time.svg" alt="T" />
+                    <img src={"svg/time" + (settings.darkMode ? "-dark.svg" : ".svg")} alt="T" />
                     {displayTime()}
+                </div>
+                <div>
+                    <img src={"svg/score" + (settings.darkMode ? "-dark.svg" : ".svg")} alt="S" />
+                    {displayScore()}
                 </div>
             </div>
             <div className={styles.options}>
                 {hasStarted && <div className={styles.options}>
                     <button className={styles.resign} onClick={handleResign}>Resign</button>
                     <div className={styles.option_wrapper}>
-                        <img title='Toggle flag mode' src={flagMode ? "ms_icons/flag-selected.png" : "ms_icons/flag.png"} alt="F" className={styles.selectable} onClick={() => {setFlagMode(!flagMode)}} />
+                        <img title='Toggle flag mode' src={(flagMode ? "ms_icons/flag-selected" : "ms_icons/flag") + (settings.darkMode ? "-dark.png" : ".png")} alt="F" className={styles.selectable} onClick={() => {setFlagMode(!flagMode)}} />
                         <input type="text" disabled value={flags.toString()} />
                     </div>
                     <button className={styles.ai} onClick={()=>{
@@ -251,7 +362,7 @@ const MainMS = () => {
                 {!hasStarted && <div className={styles.options}>
                     <button className={styles.play} onClick={handlePlay}>Play</button>
                     <div className={styles.option_wrapper}>
-                        <img src="ms_icons/double_arrow.png" alt="W" />
+                        <img src={"ms_icons/double_arrow" + (settings.darkMode ? "-dark.png" : ".png")} alt="W" />
                         <input type="text" disabled value={gridSize.y.toString()}/>
                         <button className={styles.plus} disabled={gridSize.y === 30} onClick={() => {
                             if (gridSize.y < 30) handleGridChange(0, 1)
@@ -261,7 +372,7 @@ const MainMS = () => {
                         }}>-</button>
                     </div>
                     <div className={styles.option_wrapper}>
-                        <img src="ms_icons/double_arrow.png" className={styles.rotated} alt="H" />
+                        <img src={"ms_icons/double_arrow" + (settings.darkMode ? "-dark.png" : ".png")} className={styles.rotated} alt="H" />
                         <input type="text" disabled value={gridSize.x.toString()} />
                         <button className={styles.plus} disabled={gridSize.x === 16} onClick={() => {
                             if (gridSize.x < 16) handleGridChange(1, 0)

@@ -307,7 +307,6 @@ export function AIMove (minefield, gridSize, bombs) {
             }
         }
     }
-    console.log(probs)
     let maxes = [], max = 0.0
     for (let i = 0; i < probs.length; i++) {
         for (let j = 0; j < probs[i].length; j++) {
@@ -319,6 +318,5 @@ export function AIMove (minefield, gridSize, bombs) {
             else if (probs[i][j] === max) maxes.push({x: i, y: j, flag: (max >= 255 ? true : false)})
         }
     }
-    console.log(maxes)
     return maxes[getRandomInt(0, maxes.length - 1)]
 }
