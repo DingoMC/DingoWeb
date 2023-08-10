@@ -131,6 +131,14 @@ export function generateStartingState (gridSize, bombs) {
     return a
 }
 
+/**
+ * Check if a field can be recursively opened
+ * @param {[[{value: string, open: boolean, flagged: boolean}]]} minefield 
+ * @param {{x: number, y: number}} gridSize 
+ * @param {number} x 
+ * @param {number} y 
+ * @returns {boolean} 
+ */
 function isRecursable (minefield, gridSize, x, y) {
     return checkCoords(gridSize, x, y) && !isOpen(minefield, x, y) && !isFlagged(minefield, x, y) && !isBomb(minefield, x, y)
 }
@@ -161,6 +169,14 @@ export function openField (minefield, gridSize, x, y, fromRecursion = false) {
     return a
 }
 
+/**
+ * Handle flagging / unflagging
+ * @param {[[{value: string, open: boolean, flagged: boolean}]]} minefield 
+ * @param {{x: number, y: number}} gridSize 
+ * @param {number} x 
+ * @param {number} y 
+ * @returns {[[{value: string, open: boolean, flagged: boolean}]]}
+ */
 export function flagField (minefield, gridSize, x, y) {
     if (minefield === undefined || minefield[x] === undefined) return minefield
     let a = initStateFrom(minefield, gridSize)
@@ -169,7 +185,7 @@ export function flagField (minefield, gridSize, x, y) {
 }
 
 /**
- * 
+ * Check if player lost
  * @param {[[{value: string, open: boolean, flagged: boolean}]]} minefield 
  */
 export function isGameOver (minefield) {
@@ -182,7 +198,7 @@ export function isGameOver (minefield) {
 }
 
 /**
- * 
+ * Check if player won
  * @param {[[{value: string, open: boolean, flagged: boolean}]]} minefield 
  * @param {number} bombCount 
  */
@@ -214,15 +230,34 @@ export function countFlags (minefield) {
     return cnt
 }
 
+/**
+ * Check if a field is open number field
+ * @param {[[{value: string, open: boolean, flagged: boolean}]]} minefield 
+ * @param {number} x 
+ * @param {number} y 
+ * @returns {boolean}
+ */
 function isOpenNumber (minefield, x, y) {
     if (!isOpen(minefield, x, y) || isBomb(minefield, x, y) || isFlagged(minefield, x, y) || valAt(minefield, x, y) === '') return false
     return true
 }
 
+/**
+ * Check if field is closed and not flagged
+ * @param {[[{value: string, open: boolean, flagged: boolean}]]} minefield 
+ * @param {number} x 
+ * @param {number} y 
+ * @returns {boolean}
+ */
 function isClosed (minefield, x, y) {
     return (!isOpen(minefield, x, y) && !isFlagged(minefield, x, y))
 }
 
+/**
+ * Count fields that are already opened or flagged
+ * @param {[[{value: string, open: boolean, flagged: boolean}]]} minefield 
+ * @returns 
+ */
 function countKnown (minefield) {
     let cnt = 0
     for (let i = 0; i < minefield.length; i++) {
@@ -236,7 +271,7 @@ function countKnown (minefield) {
 /**
  * Count default probability for unknown fields
  * @param {[[{value: string, open: boolean, flagged: boolean}]]} minefield 
- * @param {number} gridSize 
+ * @param {{x: number, y: number}} gridSize 
  * @param {number} bombs 
  */
 function defaultProb (minefield, gridSize, bombs) {
@@ -262,7 +297,7 @@ function isUnknown (minefield, gridSize, x, y) {
 /**
  * 
  * @param {[[{value: string, open: boolean, flagged: boolean}]]} minefield 
- * @param {number} gridSize 
+ * @param {{x: number, y: number}} gridSize 
  * @param {number} bombs 
  */
 export function AIMove (minefield, gridSize, bombs) {
@@ -319,4 +354,38 @@ export function AIMove (minefield, gridSize, bombs) {
         }
     }
     return maxes[getRandomInt(0, maxes.length - 1)]
+}
+
+/**
+ * Calculate level difficulty
+ * @param {{x: number, y: number}} gridSize 
+ * @param {number} bombs 
+ * @returns {number}
+ */
+export function calculateDifficulty (gridSize, bombs) {
+    /*let a = 1.0 * gridSize.x * gridSize.y
+    return (81.0 * bombs) / (10.0 * a)*/
+    let a = 1.0 * gridSize.x * gridSize.y
+    let d_a = 3e-05 * Math.pow(a, 2.0) + 0.0198 * a - 1.0668
+    let d_b = -0.0002 * Math.pow(bombs, 2.0) + 0.32 * bombs + -2.2052
+    return (d_a + d_b) / 2.0
+}
+
+/**
+ * Return minimum level bomb count
+ * @param {{x: number, y: number}} gridSize 
+ * @returns {number}
+ */
+export function minBombCount (gridSize) {
+    let f = gridSize.x * gridSize.y
+    return Math.floor(0.000230487 * f * f + 0.0937545 * f + 0.893663)
+}
+
+/**
+ * Return maximum level bomb count
+ * @param {{x: number, y: number}} gridSize 
+ * @returns {number}
+ */
+export function maxBombCount (gridSize) {
+    return ((gridSize.x * gridSize.y) - Math.max(gridSize.x, gridSize.y))
 }

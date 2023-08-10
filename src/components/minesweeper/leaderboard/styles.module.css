@@ -1,0 +1,5 @@
+.main_container {
+    height: 100vh;
+}
+/* Dark Mode */
+.main_container.dark { background: rgb(25, 20, 30); }

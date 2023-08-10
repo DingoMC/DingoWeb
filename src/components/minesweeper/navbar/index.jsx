@@ -10,6 +10,10 @@ const NavBarMS = ({current, settings}) => {
                 <Link to="/minesweeper">
                     <button title="Home Page" type="button" className={`${styles.white_btn} ${settings.darkMode && styles.dark}`}><img alt="Home" src="/svg/home.svg" /></button>
                 </Link>}
+                {current !== 'leaderboard' &&
+                <Link to="/minesweeper/leaderboard">
+                    <button title="Leaderboard" type="button" className={`${styles.white_btn} ${settings.darkMode && styles.dark}`}><img alt="Leaderboard" src="/svg/leaderboard.svg" /></button>
+                </Link>}
                 <Link to="/">
                     <button title="Go back to main website" className={`${styles.white_btn} ${settings.darkMode && styles.dark}`}><img alt="Back" src="/svg/logout.svg" /></button>
                 </Link>

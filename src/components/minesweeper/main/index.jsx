@@ -1,5 +1,5 @@
 import { breakpointColor } from '../../../lib/colors'
-import { AIMove, flagField, generateStartingState, isBomb, isFlagged, isGameOver, isGameWin, isOpen, openField, valAt } from '../../../lib/minesweeper'
+import { AIMove, calculateDifficulty, flagField, generateStartingState, isBomb, isFlagged, isGameOver, isGameWin, isOpen, maxBombCount, minBombCount, openField, valAt } from '../../../lib/minesweeper'
 import NavBarMS from '../navbar'
 import styles from './styles.module.css'
 import { useEffect, useState, useRef } from 'react'
@@ -43,11 +43,11 @@ const MainMS = () => {
 
     useEffect(() => {
         setMinefield(generateStartingState(gridSize, bombs))
-        setDifficulty(calculateDifficulty())
+        setDifficulty(calculateDifficulty(gridSize, bombs))
     }, [gridSize, bombs])
 
     useEffect(() => {
-        if (AIEnabled) {
+        if (AIEnabled || time === 0) {
             setScoreOnWin(0)
             setScoreOnLose(0)
         }
@@ -127,15 +127,6 @@ const MainMS = () => {
             setWins(wins + 1)
         }
     }, [gameOver, gameWon])
-
-    const calculateDifficulty = () => {
-        /*let a = 1.0 * gridSize.x * gridSize.y
-        return (81.0 * bombs) / (10.0 * a)*/
-        let a = 1.0 * gridSize.x * gridSize.y
-        let d_a = 3e-05 * Math.pow(a, 2.0) + 0.0198 * a - 1.0668
-        let d_b = -0.0002 * Math.pow(bombs, 2.0) + 0.32 * bombs + -2.2052
-        return (d_a + d_b) / 2.0
-    }
 
     const handleOpen = (row, col) => {
         let newState = openField(minefield, gridSize, row, col)
@@ -238,20 +229,11 @@ const MainMS = () => {
         setAIEnabled(false)
     }
 
-    const minBombCount = (x, y) => {
-        let f = x * y;
-        return Math.floor(0.000230487 * f * f + 0.0937545 * f + 0.893663);
-    }
-
-    const maxBombCount = () => {
-        return ((gridSize.x * gridSize.y) - Math.max(gridSize.x, gridSize.y))
-    }
-
     const handleGridChange = (dx, dy) => {
         let x = gridSize.x + dx, y = gridSize.y + dy
         setGridSize({x: x, y: y})
-        setBombs(minBombCount(x, y))
-        setFlags(minBombCount())
+        setBombs(minBombCount(gridSize))
+        setFlags(minBombCount(gridSize))
     }
 
     const displayDifficulty = () => {
@@ -273,7 +255,6 @@ const MainMS = () => {
     }
 
     const timeStr = () => {
-        let str = ''
         let t = time, h = 0, m = 0, s = 0
         while (t >= 3600) {
             h++
@@ -284,12 +265,7 @@ const MainMS = () => {
             t -= 60
         }
         s = t
-        if (h > 0) str += h.toString() + ':'
-        if (m < 10) str += '0'
-        str += m.toString() + ':'
-        if (s < 10) str += '0'
-        str += s.toString()
-        return str
+        return (h > 0 ? (h.toString() + ':') : '') + (m < 10 ? '0' : '') + m.toString() + ':' + (s < 10 ? '0' : '') + s.toString()
     }
 
     const displayTime = () => {
@@ -384,14 +360,14 @@ const MainMS = () => {
                     <div className={styles.option_wrapper}>
                         <img src="ms_icons/bomb.png" alt="F" />
                         <input type="text" disabled value={bombs.toString()} />
-                        <button className={styles.plus} disabled={bombs === maxBombCount()} onClick={() => {
-                            if (bombs < maxBombCount()) {
+                        <button className={styles.plus} disabled={bombs === maxBombCount(gridSize)} onClick={() => {
+                            if (bombs < maxBombCount(gridSize)) {
                                 setBombs(bombs + 1)
                                 setFlags(bombs + 1)
                             }
                         }}>+</button>
-                        <button className={styles.minus} disabled={bombs === minBombCount(gridSize.x, gridSize.y)} onClick={() => {
-                            if (bombs > minBombCount(gridSize.x, gridSize.y)) {
+                        <button className={styles.minus} disabled={bombs === minBombCount(gridSize)} onClick={() => {
+                            if (bombs > minBombCount(gridSize)) {
                                 setBombs(bombs - 1)
                                 setFlags(bombs - 1)
                             }
