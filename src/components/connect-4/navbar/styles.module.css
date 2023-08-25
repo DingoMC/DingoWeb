@@ -1,0 +1,68 @@
+.navbar {
+	width: 100%;
+	height: 70px;
+	background-color: #3bb1ab;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.navbar h1 {
+	color: white;
+	font-size: 25px;
+	margin-left: 0.4rem;
+}
+
+.button_grid {
+	display: grid;
+	grid-auto-flow: column;
+	column-gap: 0.7rem;
+	margin-right: 0.7rem;
+}
+
+.white_btn {
+	border: none;
+	outline: none;
+	padding: 0.5rem 0.7rem;
+	background-color: white;
+	border-radius: 1rem;
+	width: max-content;
+	cursor: pointer;
+}
+
+.white_btn:hover { background-color: #efefef; }
+
+.navbar img {
+	max-width: 2rem;
+	max-height: 2rem;
+}
+
+.navbar.dark { background-color: #00313b; }
+.navbar.dark h1 { color: #cacaca; }
+.white_btn.dark { background-color: #cacaca; }
+.white_btn.dark:hover { background-color: #bababa; }
+
+@media screen and (max-width: 720px) {
+	.navbar {
+		display: flex;
+		flex-direction: column;
+		height: max-content;
+	}
+	.navbar h1 {
+		font-size: 1.4rem;
+		margin: 0;
+		padding: 0.2rem 0;
+	}
+	.white_btn {
+		padding: 0.3rem 0.4rem;
+		border-radius: 0.7rem;
+	}
+	.navbar img {
+		max-width: 1.5rem;
+		max-height: 1.5rem;
+	}
+	.button_grid {
+		column-gap: 0.7rem;
+		margin-bottom: 0.4rem;
+	}
+}

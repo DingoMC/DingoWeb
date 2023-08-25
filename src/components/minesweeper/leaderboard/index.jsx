@@ -96,11 +96,11 @@ const LeaderboardMS = () => {
                             </div>
                             : (
                                 (!isGuest() || localStorage.getItem('ms_stats') === null) ? 
-                                <div className={`${styles.no_own_score}`}>You haven't played this mode yet!</div>
+                                <div className={`${styles.no_own_score}`}>You haven't played this game yet!</div>
                                 : <div className={styles.own_score_grid}>
                                     <div className={styles.own_rank}>Unranked</div>
                                     <div>-</div>
-                                    <div className={styles.own_points}>{localStorage.getItem('ms_stats')}</div>
+                                    <div className={styles.own_points}>{JSON.parse(localStorage.getItem('ms_stats')).score}</div>
                                 </div>
                             )
                         }
