@@ -214,8 +214,7 @@ const Main2048 = () => {
                     tileArray={tileArray}
                     gridSize={gridSize}
                     running={running}
-                    setRunning={setRunning}
-                    gameOver={gameOver} />
+                    setRunning={setRunning}/>
                 <div className={styles.wrapper}>
                     <Grid gridSize={gridSize} settings={settings} tileArray={tileArray}/>
                     {gameOver && <div className={styles.lost}>Game Over</div>}

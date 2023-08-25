@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Footer from '../footer'
 import NavBar from '../nav'
 import styles from './styles.module.css'
@@ -22,6 +23,7 @@ const Contact = () => {
                     <div className={styles.key}>Discord</div>
                     <div className={styles.value}>DingoMC#2776</div>
                 </div>
+                <Link className={styles.link} to='/schedule'>DingoMC's schedule</Link>
             </div>
             <Footer />
         </div>

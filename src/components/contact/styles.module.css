@@ -39,6 +39,11 @@
     font-size: 1.3rem;
     color: #eeaa21;
 }
+.link  {
+    text-decoration: underline;
+    font-size: 1.3rem;
+    color: #ddffff;
+}
 @media screen and (max-width: 800px) {
     .container {
         padding: 0.7rem 1.33rem;

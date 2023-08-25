@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react"
-import { moveLeft, autoRandomMovePicker, moveUp, moveDown, moveRight, autoCycleMoverPicker, autoLURUMoverPicker, autoAI1MovePicker, autoAI2MovePicker, autoAIMovePicker } from "../../../lib/tile_array"
+import { moveLeft, autoRandomMovePicker, moveUp, moveDown, moveRight, autoCycleMoverPicker, autoLURUMoverPicker, autoAIMovePicker, countAON, generateStartingState, isGameOver } from "../../../lib/tile_array"
 import styles from "./styles.module.css"
 
-const Auto2048 = ({score, setScore, setScoreOnLastFuse, setTileArray, setAIWasEnabled, tileArray, gridSize, running, setRunning, gameOver}) => {
+const Auto2048 = ({score, setScore, setScoreOnLastFuse, setTileArray, setAIWasEnabled, tileArray, gridSize, running, setRunning}) => {
 
     const modes = ['Random', 'Cycle', 'LURU', 'AI-1', 'AI-2', 'AI-3', 'AI-4', 'AI-5']
     const [mode, setMode] = useState(modes[0])
     const [sequencer, setSequencer] = useState([])
     const [seq, setSeq] = useState(0)
     const [delay, setDelay] = useState(500)
+
+    // AI Test mode states
+    const [aiTestMode, setAITestMode] = useState({enabled: false, iter: 1, max_iter: 52, scores: [], average: 0.00})
 
     const afterMoveInteraction = (r) => {
         let newState = r.tileArray
@@ -31,7 +34,25 @@ const Auto2048 = ({score, setScore, setScoreOnLastFuse, setTileArray, setAIWasEn
     }
 
     const stopHandler = () => {
-        setRunning(false)
+        if (aiTestMode.enabled) {
+            setRunning(false)
+            let new_iter = aiTestMode.iter + 1
+            let new_scores = aiTestMode.scores
+            new_scores.push(score)
+            let new_average = countAON(new_scores)
+            console.log(`Iteration: ${aiTestMode.iter}/${aiTestMode.max_iter}, Score: ${score}, AOn: ${new_average}`)
+            setAITestMode({...aiTestMode, iter: new_iter, scores: new_scores, average: new_average})
+            if (new_iter > aiTestMode.max_iter) {
+                setAITestMode({...aiTestMode, scores: [], average: 0, iter: 1})
+            }
+            else {
+                setScore(0)
+                setScoreOnLastFuse(0)
+                setTileArray(generateStartingState(gridSize))
+                setRunning(true)
+            }
+        }
+        else setRunning(false)
     }
 
     useEffect(() => {
@@ -94,11 +115,9 @@ const Auto2048 = ({score, setScore, setScoreOnLastFuse, setTileArray, setAIWasEn
                 case 3: { r = moveLeft(tileArray, gridSize); break; }
                 default: { console.error("Unknown moveID"); break; }
             }
-            if (moveNo === -1) stopHandler()
-            else {
-                afterMoveInteraction(r)
-                if (gameOver) stopHandler()
-            }
+            let gameOver = isGameOver(tileArray, gridSize)
+            if (moveNo !== -1) afterMoveInteraction(r)
+            if (gameOver) stopHandler()
         }, delay)
         return () => clearInterval(f)
     }, [tileArray, gridSize, running, delay, mode])

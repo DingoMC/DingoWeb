@@ -449,9 +449,9 @@ function steps (val1, val2) {
 function AI_NeighborValue (tileArray, gridSize, x, y) {
     if (tileArray[idx(gridSize, x, y)].val === 0) return 1.0
     let m = 1.0
-    let stepInterest = [[2.0, 1.8, 1.4],
-                        [0.01, 0.0, -0.01],
-                        [-0.01, -0.02, -0.01]]
+    let stepInterest = [[1.0, 1.0, 0.75],
+                        [0.25, 0.0, -0.25],
+                        [-0.25, -0.5, -0.75]]
     for (let i = x - 1; i <= x + 1; i++) {
         for (let j = y - 1; j <= y + 1; j++) {
             if (indexCorrect(gridSize, i, j)) {
@@ -479,7 +479,7 @@ function AI_NeighborValue (tileArray, gridSize, x, y) {
 }
 
 function AI_TotalTileValue (tileArray, gridSize, x, y) {
-    let weights = [0.297, 1.0, 0.1]
+    let weights = [0.276, 0.801, 0.474]
     let values = [AI_FieldValue(tileArray, gridSize, x, y),
                 AI_TileCountValue(tileArray, gridSize),
                 AI_NeighborValue(tileArray, gridSize, x, y)]
@@ -602,4 +602,22 @@ export function autoAIMovePicker (moves, tileArray, gridSize) {
     })
     if (maxkey === 'x') return -1
     return parseInt(maxkey[1])
+}
+
+/**
+ * 
+ * @param {number[]} array 
+ */
+export function countAON (array) {
+    if (array.length === 0) return 0.0
+    let max = array[0]
+    let min = array[0]
+    let s = 0.0
+    for (let i = 0; i < array.length; i++) {
+        s += array[i]
+        if (array[i] > max) max = array[i]
+        if (array[i] < min) min = array[i]
+    }
+    if (array.length < 3) return s / array.length
+    return (s - max - min) / (array.length - 2.0)
 }
