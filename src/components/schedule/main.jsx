@@ -7,11 +7,25 @@ import Add from "./add"
 import Display from "./display"
 import NavBar from "../nav"
 
+const handleIsAdmin = async () => {
+    try {
+        const url = cors_url("api/usersettings/isadmin")
+        const token = localStorage.getItem("token")
+        const response = await axios.get(url, {params: {token: token}})
+        if (response.data.is_admin) return 2
+        else return 0
+    }
+    catch (error) {
+        console.log(error)
+        return 0
+    }
+}
+
 const Schedule = () => {
     const user = localStorage.getItem("token")
     const guest = (user === null)
-    const [isAdmin, setIsAdmin] = useState(1)
     const [scheduleArray, setScheduleArray] = useState([])
+    const [isAdmin, setIsAdmin] = useState(1)
     const [addMode, setAddMode] = useState(false)
 
     const handleScheduleGet = async () => {
@@ -26,21 +40,13 @@ const Schedule = () => {
     }
 
     useEffect(() => {
-        const handleIsAdmin = async () => {
-            try {
-                const url = cors_url("api/usersettings/isadmin")
-                const token = localStorage.getItem("token")
-                const response = await axios.get(url, {params: {token: token}})
-                if (response.data.is_admin) setIsAdmin(2)
-                else setIsAdmin(0)
-            }
-            catch (error) {
-                console.log(error)
-            }
+        if (isAdmin === 1) {
+            if (guest) setIsAdmin(0)
+            else handleIsAdmin().then((v) => {
+                setIsAdmin(v)
+            })
         }
-        if (!guest) handleIsAdmin().catch(console.error)
-        else setIsAdmin(0)
-    }, [])
+    }, [isAdmin])
 
     useEffect(() => {
         if (isAdmin !== 1) handleScheduleGet()
@@ -48,9 +54,9 @@ const Schedule = () => {
 
     const generateRows = () => {
         let rows = []
-        if (addMode) rows.push(<Add key={'as'} setAddMode={setAddMode}/>)
+        if (addMode) rows.push(<Add key={'as'} setAddMode={setAddMode} handleIsAdmin={handleIsAdmin}/>)
         for (let i = 0; i < scheduleArray.length; i++) {
-            rows.push(<Row key={i} data={scheduleArray[i]} isAdmin={isAdmin} />)
+            rows.push(<Row key={i} data={scheduleArray[i]} isAdmin={isAdmin} handleIsAdmin={handleIsAdmin} />)
         }
         return rows
     }

@@ -4,29 +4,35 @@ import { cors_url } from '../../../lib/cors_url'
 import axios from 'axios'
 import { convertDayToString, convertHourToString, convertTimeToDouble } from '../lib'
 
-const handleScheduleDelete = async (id) => {
-    try {
-        const url = cors_url("api/schedule/") + id
-        await axios.delete(url)
-        window.location.reload()
+const Row = ({data, isAdmin, handleIsAdmin}) => {
+    const handleScheduleDelete = async (id) => {
+        handleIsAdmin().then(async (v) => {
+            if (v === 2) {
+                try {
+                    const url = cors_url("api/schedule/") + id
+                    await axios.delete(url)
+                    window.location.reload()
+                }
+                catch (error) {
+                    console.log(error)
+                }
+            }
+        })
     }
-    catch (error) {
-        console.log(error)
+    const handleEdit = async (id, newData) => {
+        handleIsAdmin().then(async (v) => {
+            if (v === 2) {
+                try {
+                    const url = cors_url("api/schedule/") + id
+                    await axios.put(url, newData)
+                    window.location.reload()
+                }
+                catch (error) {
+                    console.log(error)
+                }
+            }
+        })
     }
-}
-
-const handleEdit = async (id, newData) => {
-    try {
-        const url = cors_url("api/schedule/") + id
-        await axios.put(url, newData)
-        window.location.reload()
-    }
-    catch (error) {
-        console.log(error)
-    }
-}
-
-const Row = ({data, isAdmin}) => {
     const [editMode, setEditMode] = useState(false)
     const [newData, setNewData] = useState({code: data.code, day: data.day, start: data.start, end: data.end, color: data.color})
     const windowSize = useRef([window.innerWidth, window.innerHeight])

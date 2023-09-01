@@ -4,17 +4,21 @@ import { cors_url } from '../../../lib/cors_url'
 import axios from 'axios'
 import { convertHourToString, convertTimeToDouble } from '../lib'
 
-const Add = ({setAddMode}) => {
+const Add = ({setAddMode, handleIsAdmin}) => {
     const windowSize = useRef([window.innerWidth, window.innerHeight])
     const handleAddNew = async () => {
-        try {
-            const url = cors_url("api/schedule")
-            await axios.post(url, data)
-            window.location.reload()
-        }
-        catch (error) {
-            console.log(error)
-        }
+        handleIsAdmin().then(async (v) => {
+            if (v === 2) {
+                try {
+                    const url = cors_url("api/schedule")
+                    await axios.post(url, data)
+                    window.location.reload()
+                }
+                catch (error) {
+                    console.log(error)
+                }
+            }
+        })
     }
 
     const [data, setData] = useState({code: '', day: 0, start: 0.00, end: 1.00, color: '#000000'})

@@ -18,6 +18,8 @@ const Main = () => {
             }
             catch (error) {
                 console.log(error)
+                if (cors_url().includes('192.168.1')) window.location.replace('https://192.168.1.200:8001')
+                else window.location.replace('https://dingomc.net:8001')
             }
         }
         handleCardsGet().catch(console.error)
