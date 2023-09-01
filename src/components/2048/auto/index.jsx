@@ -79,11 +79,13 @@ const Auto2048 = ({score, setScore, setScoreOnLastFuse, setTileArray, setAIWasEn
                     let cdata = autoCycleMoverPicker(tileArray, gridSize, sequencer, seq)
                     moveNo = cdata.moveID
                     setSeq(cdata.seq)
+                    break
                 }
                 case (modes[2]): {
                     let cdata = autoLURUMoverPicker(tileArray, gridSize, sequencer, seq)
                     moveNo = cdata.moveID
                     setSeq(cdata.seq)
+                    break
                 }
                 case (modes[3]): {
                     moveNo = autoAIMovePicker(1, tileArray, gridSize)
@@ -103,6 +105,10 @@ const Auto2048 = ({score, setScore, setScoreOnLastFuse, setTileArray, setAIWasEn
                 }
                 case (modes[7]): {
                     moveNo = autoAIMovePicker(5, tileArray, gridSize)
+                    break
+                }
+                default: {
+                    moveNo = autoRandomMovePicker(tileArray, gridSize)
                     break
                 }
             }

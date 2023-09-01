@@ -232,7 +232,6 @@ function opponent (type) {
  */
 export function AIMoveSelector (grid, level) {
     let weight = new Array(6)
-    let move = {x: 0, y: 0}
     // Initialize values
     for (let i = 0; i < 6; i++) {
         weight[i] = new Array(7)
@@ -246,22 +245,22 @@ export function AIMoveSelector (grid, level) {
         for (let i = 0; i < 6; i++) {
             for (let j = 0; j < 7; j++) {
                 let pos_weight = 0
-                if (i == 0 || i == 5) {
-                    if (j == 0 || j == 6) pos_weight = 3;
-                    else if (j == 1 || j == 5) pos_weight = 4;
-                    else if (j == 2 || j == 4) pos_weight = 5;
+                if (i === 0 || i === 5) {
+                    if (j === 0 || j === 6) pos_weight = 3;
+                    else if (j === 1 || j === 5) pos_weight = 4;
+                    else if (j === 2 || j === 4) pos_weight = 5;
                     else pos_weight = 7;
                 }
-                else if (i == 1 || i == 4) {
-                    if (j == 0 || j == 6) pos_weight = 4;
-                    else if (j == 1 || j == 5) pos_weight = 6;
-                    else if (j == 2 || j == 4) pos_weight = 8;
+                else if (i === 1 || i === 4) {
+                    if (j === 0 || j === 6) pos_weight = 4;
+                    else if (j === 1 || j === 5) pos_weight = 6;
+                    else if (j === 2 || j === 4) pos_weight = 8;
                     else pos_weight = 10;
                 }
                 else {
-                    if (j == 0 || j == 6) pos_weight = 5;
-                    else if (j == 1 || j == 5) pos_weight = 8;
-                    else if (j == 2 || j == 4) pos_weight = 11;
+                    if (j === 0 || j === 6) pos_weight = 5;
+                    else if (j === 1 || j === 5) pos_weight = 8;
+                    else if (j === 2 || j === 4) pos_weight = 11;
                     else pos_weight = 13;
                 }
                 weight[i][j] += pos_weight / 13.0

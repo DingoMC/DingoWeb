@@ -397,13 +397,6 @@ export function autoLURUMoverPicker (tileArray, gridSize, sequencer, seqNo) {
     return {moveID: moveID, seq: cursor}
 }
 
-function isRowFull (tileArray, gridSize, row) {
-    for(let y = 0; y < gridSize; y++) {
-        if (!isOccupied(tileArray, gridSize, row, y)) return false
-    }
-    return true
-}
-
 /**
  * Get Field Position Value (AI1)
  * @param {{x: number, y: number, val: number}[]} tileArray 
@@ -531,7 +524,7 @@ function nextKey (key) {
         vArray[i]++
         if (vArray[i] > 3) {
             vArray[i] = 0
-            if (i == 0) nextGen = '0'
+            if (i === 0) nextGen = '0'
         }
         else break;
     }
