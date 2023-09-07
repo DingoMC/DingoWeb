@@ -1,13 +1,9 @@
-export function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
+import { randomElement } from "./random";
 
 /**
- * 
- * @param {string[][]} grid 
- * @returns {string[][]}
+ * Initialize state from grid
+ * @param {string[][]} grid Grid to initialize from
+ * @returns {string[][]} Initialized grid
  */
 function initStateFrom (grid) {
     let a = new Array(6)
@@ -21,55 +17,56 @@ function initStateFrom (grid) {
 }
 
 /**
- * 
+ * Check if coords are valid
  * @param {number} x 
  * @param {number} y 
- * @returns 
+ * @returns {boolean}
  */
 function checkCoords (x, y) {
     return (x >= 0 && x < 6 && y >= 0 && y < 7)
 }
 
 /**
- * 
- * @param {string[][]} grid 
+ * Check if field is empty
+ * @param {string[][]} grid
  * @param {number} x 
  * @param {number} y 
- * @returns 
+ * @returns {boolean}
  */
 function isEmpty (grid, x, y) {
     return (checkCoords(x, y) && grid[x][y] === 'empty')
 }
 
 /**
- * 
+ * Check if field is locked
  * @param {string[][]} grid 
  * @param {number} x 
  * @param {number} y 
- * @returns 
+ * @returns {boolean}
  */
 function isLocked (grid, x, y) {
     return (checkCoords(x, y) && grid[x][y] === 'locked')
 }
 
 /**
- * 
+ * Check if field is occupied by type
  * @param {string[][]} grid 
  * @param {number} x 
  * @param {number} y 
- * @param {string} type 
- * @returns 
+ * @param {string} type Type of field to check for
+ * @returns {boolean}
  */
 function isOccupiedBy (grid, x, y, type) {
     return (checkCoords(x, y) && grid[x][y] === type)
 }
 
 /**
- * 
+ * Check if specific player wins
  * @param {string[][]} grid 
  * @param {number} x 
  * @param {number} y 
- * @param {string} type 
+ * @param {string} type Player type p1 | p2
+ * @returns {boolean}
  */
 function checkWin (grid, type) {
     let cnt = 0
@@ -113,8 +110,9 @@ function checkWin (grid, type) {
 }
 
 /**
- * If grid is Full
+ * Check if grid is Full
  * @param {string[][]} grid 
+ * @returns {boolean}
  */
 function isFull (grid) {
     for (let i = 0; i < 6; i++) {
@@ -126,9 +124,9 @@ function isFull (grid) {
 }
 
 /**
- * 
+ * Get game state
  * @param {string[][]} grid 
- * @returns -1 = not ended, 0 = draw, 1 = player 1 wins, 2 = player 2 wins
+ * @returns {-1|0|1|2} -1 = not ended, 0 = draw, 1 = player 1 wins, 2 = player 2 wins
  */
 export function gameState (grid) {
     if (checkWin(grid, 'p1')) return 1
@@ -139,7 +137,7 @@ export function gameState (grid) {
 
 /**
  * Generate empty grid
- * @returns {string[][]}
+ * @returns {string[][]} empty grid
  */
 export function generateStartingState () {
     let grid = new Array(6)
@@ -154,11 +152,12 @@ export function generateStartingState () {
 }
 
 /**
- * 
+ * Update grid after move
  * @param {string[][]} grid 
- * @param {number} player_no 
+ * @param {number} player_no Player number 
  * @param {number} x 
  * @param {number} y 
+ * @returns {string[][]} New grid
  */
 export function updateGridByMove (grid, player_no, x, y) {
     let ng = initStateFrom(grid)
@@ -167,6 +166,14 @@ export function updateGridByMove (grid, player_no, x, y) {
     return ng
 }
 
+/**
+ * Get weight of horizontal danger at field
+ * @param {string[][]} grid 
+ * @param {number} x 
+ * @param {number} y 
+ * @param {string} type p1 | p2
+ * @returns {number}
+ */
 function horizontalDangerWeight (grid, x, y, type) {
     let cnt = 0, max_cnt = 0
     for (let j = y - 3; j <= y + 3; j++) {
@@ -179,6 +186,14 @@ function horizontalDangerWeight (grid, x, y, type) {
     return Math.pow(2.0, (max_cnt - 1.0))
 }
 
+/**
+ * Get weight of vertical danger at field
+ * @param {string[][]} grid 
+ * @param {number} x 
+ * @param {number} y 
+ * @param {string} type p1 | p2
+ * @returns {number}
+ */
 function verticalDangerWeight (grid, x, y, type) {
     let cnt = 0, max_cnt = 0
     for (let i = x - 3; i <= x + 3; i++) {
@@ -191,6 +206,14 @@ function verticalDangerWeight (grid, x, y, type) {
     return Math.pow(2.0, (max_cnt - 1.0))
 }
 
+/**
+ * Get weight of diagonal danger at field
+ * @param {string[][]} grid 
+ * @param {number} x 
+ * @param {number} y 
+ * @param {string} type p1 | p2
+ * @returns {number}
+ */
 function diagonal1DangerWeight (grid, x, y, type) {
     let cnt = 0, max_cnt = 0
     for (let i = -3; i <= 3; i++) {
@@ -203,6 +226,14 @@ function diagonal1DangerWeight (grid, x, y, type) {
     return Math.pow(2.0, (max_cnt - 1.0))
 }
 
+/**
+ * Get weight of inverse diagonal danger at field
+ * @param {string[][]} grid 
+ * @param {number} x 
+ * @param {number} y 
+ * @param {string} type p1 | p2
+ * @returns {number}
+ */
 function diagonal2DangerWeight (grid, x, y, type) {
     let cnt = 0, max_cnt = 0
     for (let i = -3; i <= 3; i++) {
@@ -215,20 +246,32 @@ function diagonal2DangerWeight (grid, x, y, type) {
     return Math.pow(2.0, (max_cnt - 1.0))
 }
 
+/**
+ * Get average danger weight at field
+ * @param {string[][]} grid 
+ * @param {number} x 
+ * @param {number} y 
+ * @param {string} type p1 | p2
+ * @returns {number}
+ */
 function averageDangerWeight (grid, x, y, type) {
     return (horizontalDangerWeight(grid, x, y, type) + verticalDangerWeight(grid, x, y, type) + diagonal1DangerWeight(grid, x, y, type) + diagonal2DangerWeight(grid, x, y, type)) * 0.25
 }
 
+/**
+ * Return opponent type
+ * @param {string} type p1 | p2
+ * @returns {string}
+ */
 function opponent (type) {
-    if (type === 'p1') return 'p2'
-    return 'p1'
+    return (type === 'p1' ? 'p2' : 'p1')
 }
 
 /**
- * 
+ * Get AI Move
  * @param {string[][]} grid 
- * @param {number} level 
- * @returns {{x: number, y: number}}
+ * @param {number} level AI Level
+ * @returns {{x: number, y: number}} Move coords
  */
 export function AIMoveSelector (grid, level) {
     let weight = new Array(6)
@@ -298,5 +341,5 @@ export function AIMoveSelector (grid, level) {
         }
     }
     if (best_moves.length === 0) return {x: -1, y: -1}
-    return best_moves[getRandomInt(0, best_moves.length - 1)]
+    return randomElement(best_moves)
 }

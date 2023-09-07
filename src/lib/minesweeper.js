@@ -1,11 +1,7 @@
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
+import { getRandomInt, randomElement } from "./random";
 
 /**
- * 
+ * Initialize minefield state
  * @param {[[{value: string, open: boolean, flagged: boolean}]]} minefield 
  * @param {{x: number, y: number}} gridSize 
  * @returns {[[{value: string, open: boolean, flagged: boolean}]]}
@@ -353,7 +349,7 @@ export function AIMove (minefield, gridSize, bombs) {
             else if (probs[i][j] === max) maxes.push({x: i, y: j, flag: (max >= 255 ? true : false)})
         }
     }
-    return maxes[getRandomInt(0, maxes.length - 1)]
+    return randomElement(maxes)
 }
 
 /**

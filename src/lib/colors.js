@@ -1,7 +1,8 @@
 /**
- * 
+ * Get a RGB color based on brakpoint values and interpolation
  * @param {[{r:number,g:number,b:number,v:number}]} breakpoints Breakpoints sorted in ascending order
- * @param {number} value 
+ * @param {number} value Value for interpolation
+ * @returns {{r:number,g:number,b:number,v:number}} Interpolated RGB color
  */
 export function breakpointColor (breakpoints, value) {
     let r = 0, g = 0, b = 0
