@@ -5,8 +5,8 @@ const Footer = () => {
         <div className={styles.footer}>
             <div className={styles.bottom_redux}></div>
             <footer>
-                <span>dingomc.net 2.0-beta</span>
-                <span>© DingoMC Systems 2023</span>
+                <span>dingomc.net 2.0</span>
+                <span>© DingoMC Systems 2024</span>
             </footer>
         </div>
     )

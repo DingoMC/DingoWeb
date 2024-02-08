@@ -3,8 +3,7 @@ import { cors_url } from "../../lib/cors_url"
 import axios from "axios"
 import Card from "../card"
 import styles from "./styles.module.css"
-import NavBar from "../nav"
-import Footer from "../footer"
+import MainLayout from "../../layouts/main"
 
 const Main = () => {
     const [cardData, setCardData] = useState([])
@@ -34,16 +33,12 @@ const Main = () => {
     }
 
     return (
-        <div className={styles.main}>
-            <NavBar current="main" />
-            <div className={styles.container}>
-                <div className={styles.title}>DingoMC Projects List</div>
-                <div className={styles.card_wrapper}>
-                    {displayCards()}
-                </div>
+        <MainLayout current="main">
+            <div className={styles.title}>DingoMC Projects List</div>
+            <div className={styles.card_wrapper}>
+                {displayCards()}
             </div>
-            <Footer />
-        </div>
+        </MainLayout>
     )
 }
 

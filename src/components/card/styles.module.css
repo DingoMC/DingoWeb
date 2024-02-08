@@ -1,16 +1,16 @@
 .card {
     padding: 0.25rem 0.5rem;
-    border: 2px solid #898989;
+    border: 1px solid #898989;
     border-radius: 0.5rem;
     display: grid;
     grid-template-rows: [r1] min-content [r2] auto [end];
-    background-color: rgba(100, 100, 100, 0.45);
+    background-color: rgba(255, 255, 255, 0.1);
     transition: all 0.5s;
 }
 .card:hover {
     border-color: #df9923;
-    background-color: rgba(255, 170, 50, 0.5);
-    box-shadow: 0 0 1.2rem 0 rgba(255, 170, 50, 0.5);
+    background-color: rgba(255, 170, 50, 0.15);
+    box-shadow: 0 0 1.2rem 0 rgba(255, 170, 50, 0.3);
     transition: all 0.5s;
 }
 .card_title {
@@ -26,48 +26,33 @@
     font-weight: bold;
     color: #ffeedd;
 }
-.card_title > .release, .card_title > .beta {
-    width: fit-content;
-    text-align: center;
-    justify-self: right;
-    align-self: center;
-    font-size: 0.9rem;
-    padding: 0.1rem 0.25rem;
-    border-radius: 0.5rem;
-}
-.card_title > .release {
-    border: 2px solid #23dd23;
-    background-color: rgba(0, 100, 0, 0.6);
-    color: #88ff88;
-}
-.card_title > .beta {
-    border: 2px solid #dd7823;
-    background-color: rgba(140, 90, 0, 0.6);
-    color: #ffdd88;
-}
 .card_content {
     display: grid;
     grid-template-rows: [r1] auto [r2] min-content [r3] min-content [end];
     font-size: 1rem;
     color: #ffffff;
-    font-weight: bold;
 }
 .card_go {
-    display: block;
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.2rem;
+    align-items: center;
     width: fit-content;
     justify-self: right;
     border-radius: 0.25rem;
     padding: 0.3rem 0.5rem;
     text-decoration: none;
-    font-size: 1.1rem;
     color: #ffffff;
-    font-weight: bold;
-    background-color: #1266ba;
+    background-color: rgba(18, 102, 186, 0.5);
     border: 1px solid #2388dc;
     transition: all 0.5s;
 }
+.card_go span {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
 .card_go:hover {
-    background-color: #3489db;
+    background-color: rgba(18, 102, 186, 0.75);
     border: 1px solid #45bcff;
     transition: all 0.5s;
 }

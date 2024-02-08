@@ -3,8 +3,7 @@ import axios from "axios"
 import { Link } from "react-router-dom"
 import styles from "./styles.module.css"
 import { cors_url } from "../../lib/cors_url"
-import NavBar from "../nav"
-import Footer from "../footer"
+import MainLayout from "../../layouts/main"
 
 const Login = () => {
     const [data, setData] = useState({ email: "", password: "" })
@@ -30,25 +29,21 @@ const Login = () => {
         }
     }
     return (
-        <div className={styles.login_container}>
-            <NavBar current='login' />
-            <div className={styles.login_form_container}>
-                <div className={styles.left}>
-                    <form className={styles.form_container} onSubmit={handleSubmit}>
-                        <h1>Login to Your Account</h1>
-                        <input type="email" placeholder="Email" name="email" onChange={handleChange} value={data.email} required className={styles.input} />
-                        <input type="password" placeholder="Password" name="password" onChange={handleChange} value={data.password} required className={styles.input} />
-                        {error && <div className={styles.error_msg}>{error}</div>}
-                        <button type="submit" className={styles.green_btn}>Sign In</button>
-                    </form>
-                    <div className={styles.link}>
-                        <span>Haven't created account yet? </span>
-                        <Link to="/signup">Sign Up</Link>
-                    </div>
+        <MainLayout current="login">
+            <div className={styles.left}>
+                <form className={styles.form_container} onSubmit={handleSubmit}>
+                    <h1>Login to Your Account</h1>
+                    <input type="email" placeholder="Email" name="email" onChange={handleChange} value={data.email} required className={styles.input} />
+                    <input type="password" placeholder="Password" name="password" onChange={handleChange} value={data.password} required className={styles.input} />
+                    {error && <div className={styles.error_msg}>{error}</div>}
+                    <button type="submit" className={styles.green_btn}>Sign In</button>
+                </form>
+                <div className={styles.link}>
+                    <span>Haven't created account yet? </span>
+                    <Link to="/signup">Sign Up</Link>
                 </div>
             </div>
-            <Footer />
-        </div>
+        </MainLayout>
     )
 }
 export default Login;

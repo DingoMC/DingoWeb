@@ -5,7 +5,7 @@ import styles from './styles.module.css'
 import Row from "./row"
 import Add from "./add"
 import Display from "./display"
-import NavBar from "../nav"
+import MainLayout from "../../layouts/main"
 
 const handleIsAdmin = async () => {
     try {
@@ -27,6 +27,7 @@ const Schedule = () => {
     const [scheduleArray, setScheduleArray] = useState([])
     const [isAdmin, setIsAdmin] = useState(1)
     const [addMode, setAddMode] = useState(false)
+    const [tzOffset, setTZOffset] = useState(0)
 
     const handleScheduleGet = async () => {
         try {
@@ -52,6 +53,20 @@ const Schedule = () => {
         if (isAdmin !== 1) handleScheduleGet()
     }, [isAdmin])
 
+    useEffect(() => {
+        if (scheduleArray && scheduleArray.length > 0) {
+            const dt = new Date();
+            let diffTZ = -dt.getTimezoneOffset() / 60.0;
+            setTZOffset(diffTZ)
+        }
+    }, [scheduleArray])
+
+    useEffect(() => {
+        setScheduleArray(scheduleArray.map((v) => {
+            return {...v, start: v.start + tzOffset, end: v.end + tzOffset}
+        }))
+    }, [tzOffset])
+
     const generateRows = () => {
         let rows = []
         if (addMode) rows.push(<Add key={'as'} setAddMode={setAddMode} handleIsAdmin={handleIsAdmin}/>)
@@ -69,30 +84,31 @@ const Schedule = () => {
         )
     }
     return (
-        <div className={styles.main}>
-            <NavBar current={'schedule'}/>
-            <div className={styles.title}>DingoMC's Schedule</div>
-            <Display data={scheduleArray} />
-            {isAdmin === 2 && !addMode && <button className={styles.btn_green} onClick={() => {
-                setAddMode(true)
-            }}>Add Schedule</button>}
-            <div className={styles.subtitle}>Legend</div>
-            <table className={styles.legend}>
-                <thead>
-                    <tr>
-                        <th>Code</th>
-                        <th>Day</th>
-                        <th>Start</th>
-                        <th>End</th>
-                        <th>Color</th>
-                        {isAdmin === 2 && <th>Action</th>}
-                    </tr>
-                </thead>
-                <tbody>
-                    {generateRows()}
-                </tbody>
-            </table>
-        </div>
+        <MainLayout current="schedule">
+            <div className={styles.container}>
+                <div className={styles.title}>DingoMC's Schedule</div>
+                <Display data={scheduleArray} />
+                {isAdmin === 2 && !addMode && <button className={styles.btn_green} onClick={() => {
+                    setAddMode(true)
+                }}>Add Schedule</button>}
+                <div className={styles.subtitle}>Legend</div>
+                <table className={styles.legend}>
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Day</th>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th>Color</th>
+                            {isAdmin === 2 && <th>Action</th>}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {generateRows()}
+                    </tbody>
+                </table>
+            </div>
+        </MainLayout>
     )
 }
 

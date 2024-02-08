@@ -92,7 +92,7 @@ export function background (data, row, col, width) {
             found.push(data[i].color)
         }
     }
-    if (found.length === 0) return 'rgba(0, 0, 0, 0.5)'
+    if (found.length === 0) return 'rgb(0, 0, 0)'
     if (found.length === 1) return found[0]
     //return 'transparent'
     let b_str = 'repeating-linear-gradient(-45deg,'

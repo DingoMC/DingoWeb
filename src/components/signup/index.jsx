@@ -3,8 +3,7 @@ import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
 import styles from "./styles.module.css"
 import { cors_url } from "../../lib/cors_url";
-import NavBar from "../nav"
-import Footer from "../footer"
+import MainLayout from "../../layouts/main";
 
 const Signup = () => {
     const [data, setData] = useState({
@@ -36,27 +35,23 @@ const Signup = () => {
         }
     }
     return (
-        <div className={styles.signup_container}>
-            <NavBar current='signup' />
-            <div className={styles.signup_form_container}>
-                <div className={styles.left}>
-                    <form className={styles.form_container} onSubmit={handleSubmit}>
-                        <h1>Create Account</h1>
-                        <input type="text" placeholder="First Name" name="firstName" onChange={handleChange} value={data.firstName} required className={styles.input} />
-                        <input type="text" placeholder="Last Name" name="lastName" onChange={handleChange} value={data.lastName} required className={styles.input} />
-                        <input type="email" placeholder="Email" name="email" onChange={handleChange} value={data.email} required className={styles.input} />
-                        <input type="password" placeholder="Password" name="password" onChange={handleChange} value={data.password} required className={styles.input} />
-                        {error && <div className={styles.error_msg}>{error}</div>}
-                        <button type="submit" className={styles.green_btn}>Sign Up</button>
-                    </form>
-                    <div className={styles.link}>
-                        <span>Already have an account? </span>
-                        <Link to="/login">Sign In</Link>
-                    </div>
+        <MainLayout current="signup">
+            <div className={styles.left}>
+                <form className={styles.form_container} onSubmit={handleSubmit}>
+                    <h1>Create Account</h1>
+                    <input type="text" placeholder="First Name" name="firstName" onChange={handleChange} value={data.firstName} required className={styles.input} />
+                    <input type="text" placeholder="Last Name" name="lastName" onChange={handleChange} value={data.lastName} required className={styles.input} />
+                    <input type="email" placeholder="Email" name="email" onChange={handleChange} value={data.email} required className={styles.input} />
+                    <input type="password" placeholder="Password" name="password" onChange={handleChange} value={data.password} required className={styles.input} />
+                    {error && <div className={styles.error_msg}>{error}</div>}
+                    <button type="submit" className={styles.green_btn}>Sign Up</button>
+                </form>
+                <div className={styles.link}>
+                    <span>Already have an account? </span>
+                    <Link to="/login">Sign In</Link>
                 </div>
             </div>
-            <Footer />
-        </div>
+        </MainLayout>
     );
 };
 export default Signup

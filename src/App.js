@@ -15,6 +15,7 @@ import Contact from "./components/contact"
 import MainMS from "./components/minesweeper/main"
 import Schedule from "./components/schedule/main"
 import MainC4 from "./components/connect-4/main"
+import Apps from "./components/apps"
 
 const store = configureStore({reducer: rootReducer})
 
@@ -33,17 +34,20 @@ function App() {
     |
     |- /connect-4
     |
-    |- /schedule (!admin -> /)
+    |- /schedule
     |- /myprofile (guests -> /login)
     |- /logout (guests -> /)
     |- /signup (users -> /)
     |- /login (users -> /)
+    |- /contact
+    |- /apps
   */
   return (
     <Provider store={store}>
       <Routes>
         <Route path="/" exact element={<Main />} />
         <Route path="/contact" exact element={<Contact />} />
+        <Route path="/apps" exact element={<Apps />} />
         <Route path="/2048" exact element={<Main2048 />} />
         <Route path="/2048/leaderboard" exact element={<Leaderboard2048 />} />
         <Route path="/2048/userscores" exact element={<UserScores2048 />} />

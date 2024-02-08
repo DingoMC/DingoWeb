@@ -89,7 +89,7 @@ const Row = ({data, isAdmin, handleIsAdmin}) => {
             <td>{convertDayToString(data.day, windowSize.current[0])}</td>
             <td>{convertHourToString(data.start)}</td>
             <td>{convertHourToString(data.end)}</td>
-            <td><div className={styles.color_box} style={{backgroundColor: data.color}}></div></td>
+            <td><div className={styles.color_box} style={{backgroundColor: data.color, opacity: 0.7}}></div></td>
             {isAdmin === 2 && <td>
                 <div className={styles.actions}>
                     <button className={styles.btn_yellow} onClick={() => {

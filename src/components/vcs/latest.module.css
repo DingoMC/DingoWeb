@@ -1,0 +1,20 @@
+.latest {
+    box-sizing: border-box;
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    align-items: center;
+    color: #88ffcc;
+    background-color: rgba(0, 170, 120, 0.3);;
+    border: 1px solid #23ffaa;
+    border-radius: 0.5rem;
+    padding: 1px 8px;
+    font-size: 0.9rem;
+}
+@media screen and (max-width: 720px) {
+    .latest {
+        font-size: 0.8rem;
+        border-radius: 0.35rem;
+        padding: 0.1rem 0.25rem;
+    }
+}

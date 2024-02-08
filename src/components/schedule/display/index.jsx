@@ -19,7 +19,7 @@ const Display = ({data}) => {
             elems.push(
                 <td title={tdTitle(data, row, col)}
                 className={`${styles.col} ${row % 4 === 3 ? styles.hour : ''}`}
-                style={{background: background(data, row, col, windowSize.current[0])}}
+                style={{background: background(data, row, col, windowSize.current[0]), opacity: 0.7}}
                 key={col}></td>
             )
         }

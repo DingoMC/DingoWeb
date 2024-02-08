@@ -1,6 +1,6 @@
 /**
  * 
- * @param {[{r:number,g:number,b:number,v:number}]} breakpoints Breakpoints sorted in ascending order
+ * @param {{r:number,g:number,b:number,v:number}[]} breakpoints Breakpoints sorted in ascending order
  * @param {number} value 
  */
 export function breakpointColor (breakpoints, value) {
@@ -17,4 +17,13 @@ export function breakpointColor (breakpoints, value) {
         }
     }
     return {r: r, g: g, b: b};
+}
+
+/**
+ * 
+ * @param {{r:number,g:number,b:number}} color 
+ * @returns 
+ */
+export function colorToRGB (color) {
+    return 'rgb(' + color.r.toFixed(0) + ',' + color.g.toFixed(0) + ',' + color.b.toFixed(0) + ')';
 }

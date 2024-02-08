@@ -1,0 +1,37 @@
+.version {
+    box-sizing: border-box;
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    color: white;
+    border: 1px solid white;
+    border-radius: 0.5rem;
+    padding: 0.15rem 0.4rem;
+}
+.Release {
+    border-color: #23dd23;
+    background-color: rgba(0, 100, 0, 0.5);
+    color: #88ff88;
+}
+.Pre-Release {
+    border-color: #ffff23;
+    background-color: rgba(140, 140, 0, 0.5);
+    color: #ffff88;
+}
+.Beta {
+    border-color: #dd7823;
+    background-color: rgba(140, 90, 0, 0.5);
+    color: #ffdd88;
+}
+.Alpha {
+    border-color: #ef4123;
+    background-color: rgba(190, 40, 0, 0.5);
+    color: #ffdddd;
+}
+@media screen and (max-width: 720px) {
+    .version {
+        font-size: 0.9rem;
+        border-radius: 0.35rem;
+        padding: 0.1rem 0.25rem;
+    }
+}
