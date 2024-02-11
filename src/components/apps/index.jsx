@@ -1,26 +1,49 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MainLayout from '../../layouts/main';
 import SingleApp from './single_app';
 import styles from './styles.module.css'
 import DownloadModal from './download_modal';
+import { cors_url } from '../../lib/cors_url';
+import axios from 'axios';
 
 export default function Apps () {
     const [downloadFileName, setDownloadFileName] = useState('');
     const [showDownloadModal, setShowDownloadModal] = useState(false);
+    const [appData, setAppData] = useState([]);
+
+    useEffect (() => {
+        const handleAppsGet = async () => {
+            try {
+                const url = cors_url("api/apps")
+                const response = await axios.get(url)
+                setAppData(response.data.apps)
+            }
+            catch (error) {
+                console.log(error)
+                if (cors_url().includes('192.168.1')) window.location.replace('https://192.168.1.200:8001')
+                else window.location.replace('https://dingomc.net:8001')
+            }
+        }
+        handleAppsGet().catch(console.error)
+    }, [])
+
 
     return (
         <>
             <MainLayout current='apps'>
                 <div>
-                    <SingleApp
-                        displayName='Dingo SC Timer App'
-                        appName='dingo_sc_app'
-                        description='Dingo Speedclimbing timer app for Android. Allows manual time measurements, USB SC System connectivity, adding participants, custom sequences and persisting results.'
-                        latestVersion='Beta 0.4.0'
-                        allVersions={['Beta 0.4.0']}
-                        setDownloadFileName={setDownloadFileName}
-                        setShowDownloadModal={setShowDownloadModal}
-                    />
+                    {
+                        appData.map((a) => {
+                            return (
+                                <SingleApp
+                                    key={a.id}
+                                    data={a}
+                                    setDownloadFileName={setDownloadFileName}
+                                    setShowDownloadModal={setShowDownloadModal}
+                                />
+                            )
+                        })
+                    }
                 </div>
             </MainLayout>
             { showDownloadModal &&

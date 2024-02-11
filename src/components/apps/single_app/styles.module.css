@@ -32,18 +32,13 @@
 .betaWarning > span {
     color: #ffeebb;
 }
-.downloadBtn, .minorDownloadBtn {
+.downloadBtn {
     color: white;
     background-color: rgba(48, 170, 255, 0.4);
     cursor: pointer;
     border-radius: 0.3rem;
     border: 1px solid #30aaff;
     transition: all ease 0.3s;
-}
-.downloadBtn:hover, .minorDownloadBtn:hover {
-    background-color: rgba(48, 170, 255, 0.6);
-}
-.downloadBtn {
     width: max-content;
     display: flex;
     flex-direction: row;
@@ -52,20 +47,8 @@
     font-size: 1.1rem;
     padding: 0.3rem 0.6rem;
 }
-.other {
-    display: flex;
-    flex-direction: column;
-    row-gap: 0.5rem;
-}
-.downloadOther {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: 0.75rem;
-}
-.minorDownloadBtn {
-    font-size: 1rem;
-    padding: 0.2rem 0.5rem;
+.downloadBtn:hover {
+    background-color: rgba(48, 170, 255, 0.6);
 }
 @media screen and (max-width: 720px) {
     .titleWrapper {
@@ -84,17 +67,5 @@
     }
     .downloadBtn {
         font-size: 1rem;
-    }
-    .other {
-        row-gap: 0.35rem;
-    }
-    .downloadOther {
-        column-gap: 0.4rem;
-    }
-    .minorDownloadBtn {
-        font-size: 0.9rem;
-    }
-    .downloadOther > div {
-        font-size: 0.8rem;
     }
 }

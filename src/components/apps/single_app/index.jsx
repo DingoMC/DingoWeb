@@ -2,9 +2,10 @@ import PropTypes from 'prop-types'
 import styles from './styles.module.css'
 import Version from '../../vcs/version';
 import Warning from '../../vcs/warning';
-import Latest from '../../vcs/latest';
 import { splitVersion } from '../../../lib/vcs';
 import { FaDownload } from "react-icons/fa6";
+import React from 'react';
+import DownloadOther from '../download_other';
 
 /**
  * Create App File Name. Add /apps/ before file name to create URL
@@ -18,11 +19,7 @@ const generateAppFileName = (appName, version) => {
 
 export default function SingleApp (props) {
     const {
-        displayName,
-        appName,
-        description,
-        latestVersion,
-        allVersions,
+        data,
         setDownloadFileName,
         setShowDownloadModal,
     } = props;
@@ -30,54 +27,39 @@ export default function SingleApp (props) {
     return (
         <div className={styles.content}>
             <div className={styles.titleWrapper}>
-                <div className={styles.displayName}>{displayName}</div>
-                <Version version={latestVersion} />
+                <div className={styles.displayName}>{data.displayName}</div>
+                <Version version={data.latestVersion} />
             </div>
             <div className={styles.contentWrapper}>
-                <div className={styles.description}>{description}</div>
-                { splitVersion(latestVersion).type !== 'Release' &&
+                <div className={styles.description}>{data.description}</div>
+                { splitVersion(data.latestVersion).type !== 'Release' &&
                     <div className={styles.betaWarning}>
                         <Warning />
                         <span>
-                            This appliaction is still in {splitVersion(latestVersion).type} version, which is under development. It may contain various visual or functional bugs depending on the device used.
+                            This appliaction is still in {splitVersion(data.latestVersion).type} version, which is under development. It may contain various visual or functional bugs depending on the device used.
                         </span>
                     </div>
                 }
                 <button className={styles.downloadBtn} onClick={() => {
-                    setDownloadFileName(generateAppFileName(appName, latestVersion))
+                    setDownloadFileName(generateAppFileName(data.name, data.latestVersion))
                     setShowDownloadModal(true)
                 }}>
                     <span>Download Latest</span>
                     <FaDownload />
                 </button>
-                <div className={styles.description}>Versions available for download:</div>
-                <div className={styles.other}>
-                    {
-                        allVersions.map((v) => {
-                            return (
-                                <div key={v} className={styles.downloadOther}>
-                                    { v === latestVersion && <Latest /> }
-                                    <div>{generateAppFileName(appName, v)}</div>
-                                    <button className={styles.minorDownloadBtn} onClick={() => {
-                                        setDownloadFileName(generateAppFileName(appName, v))
-                                        setShowDownloadModal(true)
-                                    }}><FaDownload /></button>
-                                </div>
-                            );
-                        })
-                    }
-                </div>
+                <DownloadOther
+                    data={data}
+                    generateAppFileName={generateAppFileName}
+                    setDownloadFileName={setDownloadFileName}
+                    setShowDownloadModal={setShowDownloadModal}
+                />
             </div>
         </div>
     );
 }
 
 SingleApp.propTypes = {
-    displayName: PropTypes.string.isRequired,
-    appName: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    latestVersion: PropTypes.string.isRequired,
-    allVersions: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    data: PropTypes.object.isRequired,
     setDownloadFileName: PropTypes.func.isRequired,
     setShowDownloadModal: PropTypes.func.isRequired,
 };

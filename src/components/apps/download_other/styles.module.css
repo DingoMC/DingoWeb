@@ -1,0 +1,54 @@
+.minorDownloadBtn {
+    color: white;
+    background-color: rgba(48, 170, 255, 0.4);
+    cursor: pointer;
+    border-radius: 0.3rem;
+    border: 1px solid #30aaff;
+    transition: all ease 0.3s;
+}
+.minorDownloadBtn:hover {
+    background-color: rgba(48, 170, 255, 0.6);
+}
+.other {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+}
+.downloadOther {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 0.75rem;
+}
+.minorDownloadBtn {
+    font-size: 1rem;
+    padding: 0.2rem 0.5rem;
+}
+.show, .hide {
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: underline;
+}
+.show {
+    color: #88ff88;
+}
+.hide {
+    color: #ff8888;
+}
+@media screen and (max-width: 720px) {
+    .description {
+        font-size: 1rem;
+    }
+    .other {
+        row-gap: 0.35rem;
+    }
+    .downloadOther {
+        column-gap: 0.4rem;
+    }
+    .minorDownloadBtn {
+        font-size: 0.9rem;
+    }
+    .downloadOther > div {
+        font-size: 0.8rem;
+    }
+}
