@@ -5,6 +5,10 @@ import Card from "../card"
 import styles from "./styles.module.css"
 import MainLayout from "../../layouts/main"
 
+const hostname = process.env.REACT_APP_HOSTNAME;
+const localname = process.env.REACT_APP_HOSTNAME;
+const port = process.env.REACT_APP_API_PORT;
+
 const Main = () => {
     const [cardData, setCardData] = useState([])
 
@@ -17,8 +21,8 @@ const Main = () => {
             }
             catch (error) {
                 console.log(error)
-                if (cors_url().includes('192.168.1')) window.location.replace('https://192.168.1.200:8001')
-                else window.location.replace('https://dingomc.net:8001')
+                if (cors_url().includes('192.168.1')) window.location.replace('https://' + localname + ':' + port)
+                else window.location.replace('https://' + hostname + ':' + port)
             }
         }
         handleCardsGet().catch(console.error)
