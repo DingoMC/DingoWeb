@@ -6,12 +6,17 @@ export default function Version (props) {
     const {
         version,
         style,
+        border = true,
+        background = true,
     } = props;
 
     const vsplit = splitVersion(version);
 
     return (
-        <div style={style} className={`${styles.version} ${styles[vsplit.type]}`}>{version}</div>
+        <div
+            style={style}
+            className={`${styles.version} ${styles[vsplit.type]} ${border && styles.withBorder} ${background && styles.withBackground}`}
+        >{version}</div>
     );
 }
 

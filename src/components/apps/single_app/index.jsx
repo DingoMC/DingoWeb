@@ -6,6 +6,7 @@ import { splitVersion } from '../../../lib/vcs';
 import { FaDownload } from "react-icons/fa6";
 import React from 'react';
 import DownloadOther from '../download_other';
+import Buglist from '../buglist';
 
 /**
  * Create App File Name. Add /apps/ before file name to create URL
@@ -52,6 +53,9 @@ export default function SingleApp (props) {
                     generateAppFileName={generateAppFileName}
                     setDownloadFileName={setDownloadFileName}
                     setShowDownloadModal={setShowDownloadModal}
+                />
+                <Buglist 
+                    data={data}
                 />
             </div>
         </div>

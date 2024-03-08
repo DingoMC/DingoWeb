@@ -1,0 +1,34 @@
+.top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 0.75rem;
+}
+.list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+}
+.show, .hide {
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: underline;
+    user-select: none;
+}
+.show {
+    color: #88ff88;
+}
+.hide {
+    color: #ff8888;
+}
+@media screen and (max-width: 720px) {
+    .description {
+        font-size: 1rem;
+    }
+    .top {
+        row-gap: 0.35rem;
+    }
+    .list {
+        column-gap: 0.4rem;
+    }
+}

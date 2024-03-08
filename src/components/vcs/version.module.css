@@ -4,33 +4,29 @@
     width: fit-content;
     height: fit-content;
     color: white;
+}
+.version.withBorder {
     border: 1px solid white;
     border-radius: 0.5rem;
     padding: 0.15rem 0.4rem;
 }
-.Release {
-    border-color: #23dd23;
-    background-color: rgba(0, 100, 0, 0.5);
-    color: #88ff88;
-}
-.Pre-Release {
-    border-color: #ffff23;
-    background-color: rgba(140, 140, 0, 0.5);
-    color: #ffff88;
-}
-.Beta {
-    border-color: #dd7823;
-    background-color: rgba(140, 90, 0, 0.5);
-    color: #ffdd88;
-}
-.Alpha {
-    border-color: #ef4123;
-    background-color: rgba(190, 40, 0, 0.5);
-    color: #ffdddd;
-}
+.Release { color: #88ff88; }
+.Release.withBorder { border-color: #23dd23; }
+.Release.withBackground { background-color: rgba(0, 100, 0, 0.5); }
+.Pre-Release { color: #ffff88; }
+.Pre-Release.withBorder { border-color: #ffff23; }
+.Pre-Release.withBackground { background-color: rgba(140, 140, 0, 0.5); }
+.Beta { color: #ffdd88; }
+.Beta.withBorder { border-color: #dd7823; }
+.Beta.withBackground { background-color: rgba(140, 90, 0, 0.5); }
+.Alpha { color: #ffdddd; }
+.Alpha.withBorder { border-color: #ef4123; }
+.Alpha.withBackground { background-color: rgba(190, 40, 0, 0.5); }
 @media screen and (max-width: 720px) {
     .version {
         font-size: 0.9rem;
+    }
+    .version.withBorder {
         border-radius: 0.35rem;
         padding: 0.1rem 0.25rem;
     }
