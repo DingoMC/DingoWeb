@@ -38,8 +38,9 @@
 }
 @media screen and (max-width: 720px) {
     .description {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
+    .show, .hide { font-size: 0.9rem; }
     .other {
         row-gap: 0.35rem;
     }
@@ -48,8 +49,5 @@
     }
     .minorDownloadBtn {
         font-size: 0.9rem;
-    }
-    .downloadOther > div {
-        font-size: 0.8rem;
     }
 }

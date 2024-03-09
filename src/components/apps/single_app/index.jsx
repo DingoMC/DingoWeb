@@ -7,6 +7,7 @@ import { FaDownload } from "react-icons/fa6";
 import React from 'react';
 import DownloadOther from '../download_other';
 import Buglist from '../buglist';
+import Changelog from '../changelog';
 
 /**
  * Create App File Name. Add /apps/ before file name to create URL
@@ -54,9 +55,8 @@ export default function SingleApp (props) {
                     setDownloadFileName={setDownloadFileName}
                     setShowDownloadModal={setShowDownloadModal}
                 />
-                <Buglist 
-                    data={data}
-                />
+                <Buglist data={data} />
+                <Changelog data={data} />
             </div>
         </div>
     );

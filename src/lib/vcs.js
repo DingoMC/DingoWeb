@@ -42,5 +42,5 @@ export function getBugFromChangelog (content) {
         if (words[i].startsWith('#')) id = words[i].slice(1);
     }
     if (id.length === 0) return null;
-    return getBugNameFromId(id);
+    return id;
 }
