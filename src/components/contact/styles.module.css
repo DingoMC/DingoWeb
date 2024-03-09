@@ -1,53 +1,10 @@
-.title {
-    text-align: center;
-    font-size: 1.75rem;
-    font-weight: bold;
-    color: #fcd922;
-    margin-bottom: 1rem;
-    padding-bottom: 0.6rem;
-    border-bottom: 2px solid #765623;
+.grid {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
 }
-.contact_grid {
-    display: grid;
-    grid-template-columns: repeat(3, max-content);
-    column-gap: 0.5rem;
-}
-.icon {
-    max-height: 28px;
-}
-.key {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #ffaa22;
-}
-.value {
-    font-size: 1.3rem;
-    color: #eeaa21;
-}
-.link  {
-    text-decoration: underline;
-    font-size: 1.3rem;
-    color: #ddffff;
-}
-@media screen and (max-width: 800px) {
-    .title {
-        font-size: 1.6rem;
-        margin-bottom: 0.9rem;
-        padding-bottom: 0.5rem;
-    }
-    .contact_grid {grid-template-columns: [start] 28px [c] max-content [end];}
-    .icon {max-height: 23px;}
-    .key {font-size: 1.2rem;}
-    .value {font-size: 1.2rem; grid-column: span 2;}
-}
-@media screen and (max-width: 480px) {
-    .title {
-        font-size: 1.5rem;
-        margin-bottom: 0.6rem;
-        padding-bottom: 0.4rem;
-    }
-    .contact_grid {grid-template-columns: [start] 24px [c] max-content [end];}
-    .icon {max-height: 18px;}
-    .key {font-size: 1rem;}
-    .value {font-size: 1rem; grid-column: span 2;}
+.link {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #55ffff;
 }

@@ -1,0 +1,45 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    row-gap: 0.5rem;
+    padding: 1rem;
+    border: 1px solid #ff4b08;
+    border-radius: 0.3rem;
+    background-color: rgba(255, 170, 0, 0.15);
+    color: #ffeddb;
+}
+.top {
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.4rem;
+}
+.top > div {
+    font-size: 1.2rem;
+}
+.top > img {
+    max-height: 28px;
+    aspect-ratio: 1 / 1;
+}
+.bottom {
+    font-size: 1rem;
+}
+.bottom > a {
+    text-decoration: none;
+    color: #ffeddb;
+}
+@media screen and (max-width: 1080px) {
+    .card {
+        width: 33%;
+    }
+}
+@media screen and (max-width: 720px) {
+    .card {
+        width: 50%;
+    }
+}
+@media screen and (max-width: 480px) {
+    .card {
+        width: unset;
+    }
+}
