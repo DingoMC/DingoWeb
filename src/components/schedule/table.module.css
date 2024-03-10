@@ -1,0 +1,49 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    position: relative;
+}
+.main {
+    border-collapse: collapse;
+}
+.main th {
+    min-width: 100px;
+    padding: 0.1rem 0;
+    border: 1px solid #19aaaa;
+    border-bottom: 2px solid #179898;
+    background-color: rgba(60, 45, 0, 0.5);
+    color: #ffdeca;
+}
+.col {
+    min-width: 100px;
+    padding: 0 2px;
+    margin: 0;
+    height: 7px;
+    max-height: 7px;
+    border-bottom: 1px dotted #007878;
+    border-top: none;
+    border-left: 1px solid #008989;
+    border-right: 1px solid #008989;
+    background-color: rgba(0, 0, 0, 0.3);
+    overflow: visible;
+}
+.hour, .hourBorder {
+    border-bottom: 1px solid #118989;
+}
+.hour:nth-child(1) {
+    min-width: 100px;
+    text-align: center;
+    background-color: rgba(0, 40, 40, 0.5);
+    color: #deffff;
+}
+@media screen and (max-width: 840px) {
+    .wrapper {
+        margin-right: 0.5rem;
+        overflow-x: scroll;
+        align-self: flex-start;
+        justify-content: flex-start;
+        max-height: 100vh;
+        width: max-content;
+    }
+}
