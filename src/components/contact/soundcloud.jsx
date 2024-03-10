@@ -12,7 +12,7 @@ export default function Soundcloud (props) {
                 <img src='/contact_icons/soundcloud.png' alt='SC'/>
                 <div>{title}</div>
             </div>
-            <div className={styles.bottom}><a href={link}>{name}</a></div>
+            <div className={styles.bottom}><a href={link} target='_blank'>{name}</a></div>
         </div>
     )
 }

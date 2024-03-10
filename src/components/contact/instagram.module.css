@@ -25,7 +25,7 @@
     font-size: 1rem;
 }
 .bottom > a {
-    text-decoration: none;
+    text-decoration: underline;
     color: #ffdfef;
 }
 @media screen and (max-width: 1080px) {

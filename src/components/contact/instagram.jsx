@@ -12,7 +12,7 @@ export default function Instagram (props) {
                 <img src='/contact_icons/instagram.png' alt='Insta'/>
                 <div>{title}</div>
             </div>
-            <div className={styles.bottom}><a href={instalink}>{name}</a></div>
+            <div className={styles.bottom}><a href={instalink} target='_blank'>{name}</a></div>
         </div>
     )
 }

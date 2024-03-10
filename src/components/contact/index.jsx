@@ -5,17 +5,18 @@ import Email from './email'
 import Instagram from './instagram'
 import Discord from './discord'
 import Soundcloud from './soundcloud'
+import ScheduleCard from './schedule'
 
 const Contact = () => {
     return (
         <MainLayout current="contact">
             <div className={styles.grid}>
+                <ScheduleCard title={'Available Hours'} name={'DingoMC\'s Schedule'} link={'/schedule'} />
                 <Email title={'Contact via Gmail'} email={'trianglecomtriangle@gmail.com'} />
                 <Email title={'Contact via Email (PL)'} email={'martin701-2001@wp.pl'} />
                 <Instagram title={'DingoMC\'s Instagram'} name={'martin.dingomc'} instalink={'https://www.instagram.com/martin.dingomc/'} />
                 <Discord title={'DingoMC\'s Discord'} name={'dingomc (DingoMC#2776)'} />
                 <Soundcloud title={'DingoMC Music'} name={'dingomc'} link={'https://soundcloud.com/dingomc'} />
-                <Link className={styles.link} to='/schedule'>DingoMC's schedule</Link>
             </div>
         </MainLayout>
     )

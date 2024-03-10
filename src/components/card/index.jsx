@@ -8,7 +8,9 @@ const Card = ({data}) => {
         <div className={styles.card}>
             <div className={styles.card_title}>
                 <div className={styles.text}>{data.title}</div>
-                <Version version={data.vtype + ' ' + data.version} style={{justifySelf: 'right', alignSelf: 'center'}} />
+                {data.vtype && data.version &&
+                    <Version version={data.vtype + ' ' + data.version} style={{justifySelf: 'right', alignSelf: 'center'}} />
+                }
             </div>
             <div className={styles.card_content}>
                 <span className={styles.card_text}>{data.content}</span>
