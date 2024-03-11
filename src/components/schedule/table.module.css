@@ -39,11 +39,11 @@
 }
 @media screen and (max-width: 840px) {
     .wrapper {
-        margin-right: 0.5rem;
         overflow-x: scroll;
         align-self: flex-start;
         justify-content: flex-start;
         max-height: 100vh;
         width: calc(100vw - 1rem);
     }
+    .main { margin-right: 0.5rem; }
 }
