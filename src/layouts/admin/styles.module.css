@@ -1,0 +1,16 @@
+.main {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    min-height: inherit;
+    height: max-content;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: transparent;
+    width: 100%;
+    box-sizing: border-box;
+}
+.container {
+    position: relative;
+    padding: 1rem;
+    z-index: 1;
+}

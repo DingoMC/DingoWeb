@@ -1,12 +1,11 @@
-import styles from "./styles.module.css"
+import styles from "./admin.module.css"
 import { Link } from "react-router-dom"
-import { isGuest } from "../../lib/guest"
 import { useState, useEffect } from "react"
 import { cors_url } from "../../lib/cors_url"
 import axios from "axios"
 import { LuMenuSquare } from "react-icons/lu";
 
-const NavBar = ({current}) => {
+const NavBarAdmin = () => {
     const user = localStorage.getItem("token")
     const guest = (user === null)
     const [isAdmin, setIsAdmin] = useState(false)
@@ -47,16 +46,11 @@ const NavBar = ({current}) => {
     const generateNavLinks = () => {
         return (
             <div className={styles.nav_links}>
-                <Link className={`${styles.nav_link} ${current === "main" ? styles.active : ""}`} to="/">Home</Link>
-                {isGuest() && <Link className={`${styles.nav_link} ${current === "login" ? styles.active : ""}`} to="/login">Login</Link>}
-                {isGuest() && <Link className={`${styles.nav_link} ${current === "signup" ? styles.active : ""}`} to="/signup">Sign up</Link>}
-                {!isGuest() && <Link className={`${styles.nav_link} ${current === "myprofile" ? styles.active : ""}`} to="/myprofile">Profile</Link>}
-                <Link className={`${styles.nav_link} ${current === "contact" ? styles.active : ""}`} to="/contact">Contact</Link>
-                {isAdmin && <Link className={`${styles.nav_link} ${current === "schedule" ? styles.active : ""}`} to="/schedule">Schedule</Link>}
-                {isAdmin && <Link className={`${styles.nav_link} ${current === "apps" ? styles.active : ""}`} to="/apps">Apps</Link>}
-                {isAdmin && <Link className={`${styles.nav_link} ${current === "admin" ? styles.active : ""}`} to="/admin">Admin</Link>}
-                <Link className={`${styles.nav_link}`} target="_blank" to="https://github.com/DingoMC">GitHub</Link>
-                {!isGuest() && <Link className={`${styles.nav_link} ${styles.red}`} to="/logout">Logout</Link>}
+                {isAdmin && <a className={styles.nav_link} href="#apps">Apps</a>}
+                {isAdmin && <a className={styles.nav_link} href="#cards">Cards</a>}
+                {isAdmin && <a className={styles.nav_link} href="#events">Events</a>}
+                {isAdmin && <a className={styles.nav_link} href="#users">Users</a>}
+                <Link className={`${styles.nav_link} ${styles.red}`} to="/">Home</Link>
             </div>
         );
     }
@@ -65,7 +59,7 @@ const NavBar = ({current}) => {
         return (
             <div className={styles.nav}>
                 <div className={styles.navMenu}>
-                    <div className={styles.nav_title}>DingoMC Website</div>
+                    <div className={styles.nav_title}>DingoMC Admin</div>
                     <LuMenuSquare
                         className={styles.menuIcon}
                         style={{color: (isMenuOpen ? 'white' : '#aaaaaa')}}
@@ -81,10 +75,10 @@ const NavBar = ({current}) => {
 
     return (
         <div className={styles.nav}>
-            <div className={styles.nav_title}>DingoMC Website</div>
+            <div className={styles.nav_title}>DingoMC Admin</div>
             {generateNavLinks()}
         </div>
     )
 }
 
-export default NavBar
+export default NavBarAdmin

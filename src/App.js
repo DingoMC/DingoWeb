@@ -16,12 +16,13 @@ import MainMS from "./components/minesweeper/main"
 import Schedule from "./components/schedule/main"
 import MainC4 from "./components/connect-4/main"
 import Apps from "./components/apps"
+import Admin from "./components/admin"
 
 const store = configureStore({reducer: rootReducer})
 
 function App() {
-  const user = localStorage.getItem("token")
-  const guest = (user === null)
+  const user = localStorage.getItem("token");
+  const guest = (user === null);
   /*
     Routing
     /
@@ -41,6 +42,7 @@ function App() {
     |- /login (users -> /)
     |- /contact
     |- /apps
+    |- /admin (users, guests -> /)
   */
   return (
     <Provider store={store}>
@@ -56,6 +58,7 @@ function App() {
         <Route path="/connect-4" exact element={<MainC4 />} />
         {user && <Route path="/myprofile" exact element={<Profile />} />}
         {user && <Route path="/logout" exact element={<Logout />} />}
+        {user && <Route path="/admin" exact element={<Admin />} />}
         {guest && <Route path="/signup" exact element={<Signup />} />}
         {guest && <Route path="/login" exact element={<Login />} />}
         <Route path="/schedule" exact element={<Schedule />} />
@@ -63,6 +66,7 @@ function App() {
         <Route path="/logout" element={<Navigate replace to="/" />} />
         <Route path="/signup" element={<Navigate replace to="/" />} />
         <Route path="/login" element={<Navigate replace to="/" />} />
+        <Route path="/admin" element={<Navigate replace to="/" />} />
       </Routes>
     </Provider>
   )

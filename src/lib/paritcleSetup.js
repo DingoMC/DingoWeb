@@ -58,4 +58,64 @@ export const particleOptionsMobile = {
     },
     detectRetina: true,
 }
+export const particleOptionsAdmin = {
+    background: { color: { value: "#110022", }, },
+    fpsLimit: 120,
+    particles: {
+        color: { value: "#550055", },
+        links: {
+            color: "#8855ff",
+            distance: 150,
+            enable: true,
+            opacity: 0.7,
+            width: 1,
+        },
+        move: {
+            direction: "none",
+            enable: true,
+            outModes: { default: "bounce", },
+            random: false,
+            speed: 0.2,
+            straight: false,
+        },
+        number: {
+            density: { enable: false, },
+            value: 60,
+        },
+        opacity: { value: 0.7, },
+        shape: { type: "circle", },
+        size: { value: { min: 2, max: 4 }, },
+    },
+    detectRetina: true,
+}
+export const particleOptionsAdminMobile = {
+    background: { color: { value: "#110022", }, },
+    fpsLimit: 120,
+    particles: {
+        color: { value: "#550055", },
+        links: {
+            color: "#8855ff",
+            distance: 100,
+            enable: true,
+            opacity: 0.5,
+            width: 1,
+        },
+        move: {
+            direction: "none",
+            enable: true,
+            outModes: { default: "bounce", },
+            random: false,
+            speed: 0.1,
+            straight: false,
+        },
+        number: {
+            density: { enable: false, },
+            value: 25,
+        },
+        opacity: { value: 0.7, },
+        shape: { type: "circle", },
+        size: { value: { min: 1, max: 3 }, },
+    },
+    detectRetina: true,
+}
 export default particleOptions;
