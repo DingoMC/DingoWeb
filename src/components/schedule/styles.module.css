@@ -43,22 +43,3 @@
 .btn_green:hover {
     background: rgba(0, 255, 0, 0.55);
 }
-@media screen and (max-width: 480px) {
-	.main {
-		width: auto;
-		background-attachment: scroll;
-	}
-	.title {
-		font-size: 1.5rem;
-	}
-	.subtitle {
-		font-size: 1.15rem;
-	}
-	.legend th {
-		font-size: 0.9rem;
-	}
-	.legend td {
-		font-size: 0.9rem;
-		word-break: break-all;
-	}
-}
