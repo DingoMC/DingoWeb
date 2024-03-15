@@ -17,7 +17,7 @@ const Main = () => {
             try {
                 const url = cors_url("api/cards")
                 const response = await axios.get(url)
-                setCardData(response.data.cards)
+                setCardData(response.data.cards.filter((c) => c.disabled === false));
             }
             catch (error) {
                 console.log(error)

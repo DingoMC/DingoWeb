@@ -1,0 +1,20 @@
+.enabled {
+    box-sizing: border-box;
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    align-items: center;
+    color: #99ff99;
+    background-color: rgba(0, 200, 0, 0.15);;
+    border: 1px solid #55ff55;
+    border-radius: 0.5rem;
+    padding: 1px 8px;
+    font-size: 0.9rem;
+}
+@media screen and (max-width: 720px) {
+    .enabled {
+        font-size: 0.8rem;
+        border-radius: 0.35rem;
+        padding: 0.1rem 0.25rem;
+    }
+}

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/admin";
 import { cors_url } from "../../lib/cors_url";
 import axios from "axios";
+import CardsTable from "./cards";
+import styles from "./styles.module.css"
 
 export default function Admin () {
     const [loading, setLoading] = useState(true);
@@ -30,7 +32,9 @@ export default function Admin () {
         <AdminLayout>
             {loading ?
                 <div>Loading...</div> :
-                <div></div>
+                <div className={styles.container}>
+                    <CardsTable />
+                </div>
             }
         </AdminLayout>
     );
