@@ -16,7 +16,11 @@ const Schedule = () => {
             try {
                 const url = cors_url("api/schedule")
                 const response = await axios.get(url)
-                setScheduleArray(response.data);
+                let data = response.data;
+                for (let i = 0; i < data.length; i++) {
+                    data[i].time = data[i].time.filter((d) => d.enabled === true);
+                }
+                setScheduleArray(data);
             }
             catch (error) {
                 console.log(error);
