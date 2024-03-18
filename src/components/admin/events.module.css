@@ -33,21 +33,19 @@
 .col80 > input {
     width: 67px;
 }
+.col100 {
+    width: 100px;
+    min-width: 100px;
+}
+.col80 > input {
+    width: 87px;
+}
 .col120 {
     width: 120px;
     min-width: 120px;
 }
 .col120 > input {
     width: 107px;
-}
-.col360 {
-    width: 360px;
-    min-width: 360px;
-    max-width: 360px;
-}
-.col360 > textarea {
-    width: 347px;
-    resize: none;
 }
 .center {
     display: flex;
@@ -68,7 +66,7 @@
 .addRow {
     background-color: rgba(0, 255, 0, 0.1);
 }
-.addRow input[type="text"], .addRow textarea {
+.addRow input[type="text"], .addRow select, .addRow input[type="time"] {
     box-sizing: border-box;
     outline: none;
     border: 1px solid #139913;
@@ -77,10 +75,13 @@
     background-color: rgba(0, 255, 0, 0.1);
     padding: 0.2rem 0.25rem;
 }
+.addRow option {
+    background-color: rgba(0, 20, 0, 0.75);
+}
 .editRow {
     background-color: rgba(0, 170, 255, 0.1);
 }
-.editRow input[type="text"], .editRow textarea {
+.editRow input[type="text"], .editRow select, .editRow input[type="time"] {
     box-sizing: border-box;
     outline: none;
     border: 1px solid #137799;
@@ -89,13 +90,13 @@
     background-color: rgba(0, 170, 255, 0.1);
     padding: 0.2rem 0.25rem;
 }
-.addRow input[type="text"]:disabled, .addRow textarea:disabled,
-.editRow input[type="text"]:disabled, .editRow textarea:disabled {
+.addRow input[type="text"]:disabled, .addRow select:disabled, .addRow input[type="time"]:disabled,
+.editRow input[type="text"]:disabled, .editRow select:disabled, .editRow input[type="time"]:disabled {
     border-color: #999999;
     color: #aaaaaa;
     background-color: rgba(255, 255, 255, 0.1);
 }
-@media screen and (max-width: 1020px) {
+@media screen and (max-width: 810px) {
     .wrapper {
         overflow-x: scroll;
         overflow-y: scroll;

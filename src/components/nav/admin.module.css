@@ -25,6 +25,10 @@ a {text-decoration: none;}
     color: #ffffff;
     transition: color 0.5s;
 }
+.nav_link.active {
+    font-weight: bold;
+    color: #ffffff;
+}
 .nav_link:hover {
     color: #cf9fff;
     transition: color 0.5s;

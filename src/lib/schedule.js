@@ -58,6 +58,18 @@ export function convertHourToString (hour) {
 }
 
 /**
+ * Convert string hour value to float
+ * @param {string} hour_str 
+ * @returns 
+ */
+export function convertHourStrToFloat (hour_str) {
+    if (hour_str.length !== 5) return 0.0;
+    const hour = parseInt(hour_str.slice(0, 2));
+    const minutes = parseInt(hour_str.slice(3));
+    return hour + (minutes / 60.0);
+}
+
+/**
  * 
  * @param {number} row 
  * @returns 
@@ -101,4 +113,19 @@ export function getEventHeight (start, end) {
     let duration = end - start;
     if (duration < 1.0) return Math.floor(duration * 28.0).toString() + 'px';
     return Math.floor(28.0 + (duration - 1.0) * 31.75).toString() + 'px';
+}
+
+/**
+ * Convert day to day name
+ * @param {number} day 
+ * @returns 
+ */
+export function dayToString (day) {
+    if (day === 0) return 'Monday';
+    if (day === 1) return 'Tuesday';
+    if (day === 2) return 'Wednesday';
+    if (day === 3) return 'Thursday';
+    if (day === 4) return 'Friday';
+    if (day === 5) return 'Saturday';
+    return 'Sunday'
 }

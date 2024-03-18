@@ -4,11 +4,20 @@ import { cors_url } from "../../lib/cors_url";
 import axios from "axios";
 import CardsTable from "./cards";
 import styles from "./styles.module.css"
+import EventsTable from "./events";
 
 export default function Admin () {
+    const defaultTab = 'cards';
     const [loading, setLoading] = useState(true);
+    const [activeTab, setActiveTab] = useState('');
     const user = localStorage.getItem("token");
     const guest = (user === null);
+
+    useEffect(() => {
+        const href = window.location.href.split('#');
+        if (href.length === 2) setActiveTab(href[1]);
+        else setActiveTab(defaultTab);
+    }, [])
 
     useEffect(() => {
         const handleIsAdmin = async () => {
@@ -29,11 +38,12 @@ export default function Admin () {
     }, [])
 
     return (
-        <AdminLayout>
+        <AdminLayout activeTab={activeTab} setActiveTab={setActiveTab}>
             {loading ?
                 <div>Loading...</div> :
                 <div className={styles.container}>
-                    <CardsTable />
+                    {activeTab === 'cards' && <CardsTable />}
+                    {activeTab === 'events' && <EventsTable />}
                 </div>
             }
         </AdminLayout>

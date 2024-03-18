@@ -9,6 +9,8 @@ import NavBarAdmin from '../../components/nav/admin';
 
 export default function AdminLayout (props) {
     const {
+        activeTab = '',
+        setActiveTab = () => {},
         children,
     } = props;
 
@@ -27,7 +29,7 @@ export default function AdminLayout (props) {
     return (
         <>
             <div className={styles.main}>
-                <NavBarAdmin />
+                <NavBarAdmin activeTab={activeTab} setActiveTab={setActiveTab} />
                 <div className={styles.container}>
                     {children}
                 </div>

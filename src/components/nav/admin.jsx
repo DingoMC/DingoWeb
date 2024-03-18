@@ -5,7 +5,11 @@ import { cors_url } from "../../lib/cors_url"
 import axios from "axios"
 import { LuMenuSquare } from "react-icons/lu";
 
-const NavBarAdmin = () => {
+const NavBarAdmin = (props) => {
+    const {
+        activeTab = '',
+        setActiveTab = () => {},
+    } = props;
     const user = localStorage.getItem("token")
     const guest = (user === null)
     const [isAdmin, setIsAdmin] = useState(false)
@@ -46,10 +50,10 @@ const NavBarAdmin = () => {
     const generateNavLinks = () => {
         return (
             <div className={styles.nav_links}>
-                {isAdmin && <a className={styles.nav_link} href="#apps">Apps</a>}
-                {isAdmin && <a className={styles.nav_link} href="#cards">Cards</a>}
-                {isAdmin && <a className={styles.nav_link} href="#events">Events</a>}
-                {isAdmin && <a className={styles.nav_link} href="#users">Users</a>}
+                {isAdmin && <a className={`${styles.nav_link} ${activeTab === 'apps' ? styles.active : ""}`} href="#apps" onClick={() => setActiveTab('apps')}>Apps</a>}
+                {isAdmin && <a className={`${styles.nav_link} ${activeTab === 'cards' ? styles.active : ""}`} href="#cards" onClick={() => setActiveTab('cards')}>Cards</a>}
+                {isAdmin && <a className={`${styles.nav_link} ${activeTab === 'events' ? styles.active : ""}`} href="#events" onClick={() => setActiveTab('events')}>Events</a>}
+                {isAdmin && <a className={`${styles.nav_link} ${activeTab === 'users' ? styles.active : ""}`} href="#users" onClick={() => setActiveTab('users')}>Users</a>}
                 <Link className={`${styles.nav_link} ${styles.red}`} to="/">Home</Link>
             </div>
         );
