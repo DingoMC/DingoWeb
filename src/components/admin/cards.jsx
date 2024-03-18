@@ -208,7 +208,7 @@ export default function CardsTable () {
     }
 
     return (
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper} id="cards">
             <table className={styles.main}>
                 <thead>
                     <tr>
