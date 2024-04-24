@@ -6,7 +6,7 @@ import styles from "./styles.module.css"
 import MainLayout from "../../layouts/main"
 
 const hostname = process.env.REACT_APP_HOSTNAME;
-const localname = process.env.REACT_APP_HOSTNAME;
+const localname = process.env.REACT_APP_LOCALNAME;
 const port = process.env.REACT_APP_API_PORT;
 
 const Main = () => {
