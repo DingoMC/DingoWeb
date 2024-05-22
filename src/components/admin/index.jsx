@@ -5,6 +5,7 @@ import axios from "axios";
 import CardsTable from "./cards";
 import styles from "./styles.module.css"
 import EventsTable from "./events";
+import UsersTable from "./users";
 
 export default function Admin () {
     const defaultTab = 'cards';
@@ -44,6 +45,7 @@ export default function Admin () {
                 <div className={styles.container}>
                     {activeTab === 'cards' && <CardsTable />}
                     {activeTab === 'events' && <EventsTable />}
+                    {activeTab === 'users' && <UsersTable />}
                 </div>
             }
         </AdminLayout>

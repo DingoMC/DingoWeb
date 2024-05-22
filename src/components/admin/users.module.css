@@ -1,0 +1,110 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    position: relative;
+}
+.main {
+    border-collapse: collapse;
+    table-layout: fixed;
+    color: white;
+}
+.main th {
+    padding: 0.1rem 0;
+    border: 1px solid #771077;
+    border-bottom: 2px solid #681068;
+    background-color: rgba(0, 45, 60, 0.5);
+    color: #caffde;
+}
+.main td {
+    padding: 0.4rem;
+    border-left: 1px solid #681068;
+    border-right: 1px solid #681068;
+    border-bottom: 1px dashed #9950b9;
+    box-sizing: border-box;
+}
+.main tr:last-child td {
+    border-bottom: 1px solid #681068;
+}
+.col80 {
+    width: 80px;
+    min-width: 80px;
+}
+.col80 > input {
+    width: 67px;
+}
+.col120 {
+    width: 120px;
+    min-width: 120px;
+}
+.col120 > input {
+    width: 107px;
+}
+.col200 {
+    width: 360px;
+    min-width: 360px;
+    max-width: 360px;
+}
+.col200 > input {
+    width: 187px;
+}
+.center {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 0.5rem;
+}
+.iconButton {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.iconButton:disabled > img {
+    cursor: not-allowed;
+}
+.iconButton > img {
+    max-width: 24px;
+}
+.addRow {
+    background-color: rgba(0, 255, 0, 0.1);
+}
+.addRow input[type="text"] {
+    box-sizing: border-box;
+    outline: none;
+    border: 1px solid #139913;
+    border-radius: 0.25rem;
+    color: #55ff55;
+    background-color: rgba(0, 255, 0, 0.1);
+    padding: 0.2rem 0.25rem;
+}
+.editRow {
+    background-color: rgba(0, 170, 255, 0.1);
+}
+.editRow input[type="text"] {
+    box-sizing: border-box;
+    outline: none;
+    border: 1px solid #137799;
+    border-radius: 0.25rem;
+    color: #55ddff;
+    background-color: rgba(0, 170, 255, 0.1);
+    padding: 0.2rem 0.25rem;
+}
+.addRow input[type="text"]:disabled,
+.editRow input[type="text"]:disabled {
+    border-color: #999999;
+    color: #aaaaaa;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+@media screen and (max-width: 1020px) {
+    .wrapper {
+        overflow-x: scroll;
+        overflow-y: scroll;
+        align-self: flex-start;
+        justify-content: flex-start;
+        max-height: 100vh;
+        width: calc(100vw - 1rem);
+    }
+    .main { margin-right: 0.5rem; }
+}
