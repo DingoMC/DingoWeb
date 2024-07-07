@@ -1,5 +1,10 @@
 import styles from "./styles.module.css"
 
+/**
+ * 
+ * @param {{gridSizeChange: (gridSize: number) => void, currGridSize: number, settings: any}} param0 
+ * @returns 
+ */
 const GridOpt = ({gridSizeChange, currGridSize, settings}) => {
 
     const convertToNN = (n) => {

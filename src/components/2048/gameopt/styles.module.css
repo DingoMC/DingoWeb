@@ -5,11 +5,14 @@
     row-gap: 0.25rem;
     column-gap: 0.5rem;
 }
+.rst_wrap button {
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    padding: 0.1rem 0.4rem;
+}
 .rst {
     background-color: #776767;
     border: 2px solid #ff7878;
-    border-radius: 0.4rem;
-    font-size: 1.2rem;
     color: #ffffff;
 }
 .rst:hover {
@@ -18,8 +21,6 @@
 .undo {
     background-color: #676777;
     border: 2px solid #7878ff;
-    border-radius: 0.4rem;
-    font-size: 1.2rem;
     color: #ffffff;
 }
 .undo:hover { background-color: #9a9aaa; }
@@ -27,6 +28,26 @@
     background-color: #474757;
     color: #878787;
     border: 2px solid #4848af;
+}
+.ai_on {
+    background-color: #555555;
+    border: 2px solid #ff55ff;
+    color: #55ff55;
+}
+.ai_on:hover {
+    background-color: #777777;
+    border: 2px solid #dd33dd;
+    color: #aaff55;
+}
+.ai_off {
+    background-color: #444444;
+    border: 2px solid #aa00aa;
+    color: #ff5555;
+}
+.ai_off:hover {
+    background-color: #666666;
+    border: 2px solid #cc22cc;
+    color: #ffaa55;
 }
 
 .rst.dark { 
@@ -43,19 +64,4 @@
     background-color: #232323;
     color: #545454;
     border: 2px solid #232354;
-}
-
-@media screen and (max-width: 720px) {
-    .rst, .undo {
-        margin: 0.35rem 0;
-        padding: 0.1rem 0.25rem;
-        font-size: 1.2rem;
-    }
-}
-@media screen and (max-width: 480px) {
-    .rst, .undo {
-        margin: 0.25rem 0;
-        padding: 0.05rem 0.25rem;
-        font-size: 1rem;
-    }
 }
