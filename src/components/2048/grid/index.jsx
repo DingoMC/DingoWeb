@@ -1,8 +1,7 @@
 import styles from "./styles.module.css";
 import Tile from "../tile";
-import { valAt } from "../../../lib/tile_array";
-import { TileArray, trueScore } from "../../../lib/ai_2048";
-import { useEffect, useRef, useState } from "react"
+import { TileArray } from "../../../lib/ai_2048";
+import { useEffect, useState } from "react"
 
 /**
  * 
@@ -42,7 +41,7 @@ const Grid = ({tileArray, settings}) => {
         let cols = []
         for (let i = 0; i < tileArray.gridSize; i++) {
             cols.push(<div className={`${styles.col} ${settings.darkMode && styles.dark}`} style={{"width": e_size_str, "height": e_size_str}} key={i}>
-                <Tile tileSize={e_size} value={trueScore(tileArray.getTileValue(x, i))}></Tile>
+                <Tile tileSize={e_size} value={tileArray.getTileValue(x, i)}></Tile>
             </div>)
         }
         return cols

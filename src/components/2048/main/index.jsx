@@ -10,8 +10,6 @@ import { useSelector, useDispatch } from "react-redux"
 import { setUserSettings } from "../../../actions"
 import NavBar2048 from "../navbar"
 import { isGuest } from "../../../lib/guest"
-import { getGameState, saveGameState } from "../../../lib/grid_state"
-import Auto2048 from "../auto"
 import { TileArray } from "../../../lib/ai_2048";
 
 const Main2048 = () => {
@@ -70,7 +68,7 @@ const Main2048 = () => {
         if (isGuest()) {
             let newState = new TileArray(tileArray.gridSize);
             newState.generateStartingState();
-            let key = 'hs' + gridSize.toString();
+            let key = 'hs' + tileArray.gridSize.toString();
             if (localStorage.getItem(key) !== null) newState.newHighscore = parseInt(localStorage.getItem(key));
             setTileArray(newState);
         }
@@ -183,7 +181,7 @@ const Main2048 = () => {
                 setHighscoreDB(tileArray.highscore);
                 const url = cors_url('api/2048/updatescore');
                 const token = localStorage.getItem("token");
-                await axios.post(url, {token: token, grid: gridSize, score: tileArray.highscore});
+                await axios.post(url, {token: token, grid: tileArray.gridSize, score: tileArray.highscore});
             }
             catch (error) {
                 console.log(error);
@@ -195,7 +193,7 @@ const Main2048 = () => {
             if (hs === null) localStorage.setItem(key, tileArray.highscore);
             else if (parseInt(hs) < tileArray.highscore) localStorage.setItem(key, tileArray.highscore);
         }
-        if (tileArray.gameOver && tileArray.highscore > highscoreDB) {
+        if (!aiMode && tileArray.gameOver && tileArray.highscore > highscoreDB) {
             if (isGuest()) {
                 let key = 'hs' + tileArray.gridSize.toString();
                 localStorage.setItem(key, tileArray.highscore);
@@ -224,7 +222,7 @@ const Main2048 = () => {
             <NavBar2048 current={"main"} settings={settings} />
             <div className={styles.main}
                 onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
-                <Scoreboard tileArray={tileArray} settings={settings} aiMode={aiMode} onMove={onMove} />
+                <Scoreboard tileArray={tileArray} settings={settings} aiMode={aiMode} onMove={onMove} onRestart={onRestart} />
                 <div className={styles.setting_box}>
                     <GameOpt onRestart={onRestart}
                         onUndo={onUndo}

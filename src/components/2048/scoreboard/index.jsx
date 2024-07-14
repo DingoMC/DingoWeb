@@ -8,10 +8,10 @@ import Auto2048 from "../auto";
 
 /**
  * 
- * @param {{tileArray: TileArray, aiMode: boolean, onMove: (move: 0 | 1 | 2 | 3) => void, settings: any}} param0 
+ * @param {{tileArray: TileArray, aiMode: boolean, onMove: (move: 0 | 1 | 2 | 3) => void, onRestart: () => Promise<void>, settings: any}} param0 
  * @returns 
  */
-const Scoreboard = ({tileArray, aiMode, onMove, settings}) => {
+const Scoreboard = ({tileArray, aiMode, onMove, onRestart, settings}) => {
     const handleScoreUpdate = async () => {
         try {
             const url = cors_url('api/2048/updatescore')
@@ -37,6 +37,7 @@ const Scoreboard = ({tileArray, aiMode, onMove, settings}) => {
                     tileArray={tileArray}
                     onMove={onMove}
                     aiMode={aiMode}
+                    onRestart={onRestart}
                 />
                 :
                 <div className={`${styles.score_box} ${settings.darkMode && styles.dark}`}>
