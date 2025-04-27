@@ -21,8 +21,8 @@ const Main = () => {
             }
             catch (error) {
                 console.log(error)
-                if (cors_url().includes('192.168.1')) window.location.replace('https://' + localname + ':' + port)
-                else window.location.replace('https://' + hostname + ':' + port)
+                if (cors_url().includes('192.168.1')) window.location.replace('https://' + localname)
+                else window.location.replace('https://' + hostname)
             }
         }
         handleCardsGet().catch(console.error)
