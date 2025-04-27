@@ -24,9 +24,5 @@ COPY --from=build /app/build ./build
 # Expose the HTTPS port
 EXPOSE 8000
 
-# Set environment variables for certificates if needed
-ENV SSL_CERT=/etc/letsencrypt/live/dingo-mc.net/fullchain.pem
-ENV SSL_KEY=/etc/letsencrypt/live/dingo-mc.net/privkey.pem
-
 # Start the server
-CMD ["serve", "-p", "8000", "--ssl-cert", "/etc/letsencrypt/live/dingo-mc.net/fullchain.pem", "--ssl-key", "/etc/letsencrypt/live/dingo-mc.net/privkey.pem", "-s", "build"]
+CMD ["serve", "-p", "8000", "-s", "build"]

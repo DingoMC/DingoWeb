@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   dingomc-net-client:
     build:
@@ -7,9 +5,4 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt:ro
-    environment:
-      - SSL_CERT=/etc/letsencrypt/live/dingo-mc.net/fullchain.pem
-      - SSL_KEY=/etc/letsencrypt/live/dingo-mc.net/privkey.pem
     restart: always
